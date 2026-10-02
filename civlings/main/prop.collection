@@ -1,0 +1,31 @@
+name: "prop"
+scale_along_z: 0
+embedded_instances {
+  id: "prop"
+  children: "scaffold"
+  children: "card"
+  data: "components {\n  id: \"script\"\n  component: \"/main/prop.script\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "scaffold"
+  data: "embedded_components {\n  id: \"scaffoldm\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_scaffold.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "card"
+  data: "embedded_components {\n  id: \"cardm\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/plane_card.gltf\\\"\\nmaterial: \\\"/assets/materials/prop.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

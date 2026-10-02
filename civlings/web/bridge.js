@@ -30,6 +30,9 @@
     this.viewer = null;
     this.balance = null;
     this.mock = false;
+    this.selectedCell = null;              // last tile clicked in the game
+    this.civlingCell = { c: 4, r: 4 };     // where the Civling stands (Lua reports)
+    this.stats = null;
     this._pending = new Map();
     this._seq = 0;
     this._initTimer = null;
@@ -133,6 +136,57 @@
   CivlingsHost.prototype.resendState = function () {
     if (this.viewer) this._toGame({ type: 'viewer', viewer: this.viewer });
     if (this.balance) this._toGame({ type: 'buzz_balance', balance: this.balance });
+    this._toGame({ type: 'announce_stats' });
+  };
+
+  // The cell commands act on: the player's selection, else the Civling's tile.
+  CivlingsHost.prototype.targetCell = function () {
+    return this.selectedCell || this.civlingCell;
+  };
+
+  CivlingsHost.prototype.assignJev = function (task) {
+    var cell = this.targetCell();
+    this._toGame({ type: 'jev', task: task, c: cell.c, r: cell.r });
+    return cell;
+  };
+
+  // Mock-mode economy only: Jev yields credit and generation debits the
+  // displayed (sample) balance. In live mode the host owns the wallet and
+  // yields/generation settle through real consent + workflow charges.
+  CivlingsHost.prototype.mockAdjust = function (delta) {
+    if (!this.mock || !this.balance) return;
+    var b = { blue: this.balance.blue || 0, green: this.balance.green || 0,
+              yellow: (this.balance.yellow || 0) + delta };
+    this._applyBalance({ balance: b });
+  };
+
+  var GEN_COST = 10; // mock Buzz price of one generated prop texture
+
+  // Generate a texture for a prop on the target cell.
+  // Mock mode: procedural canvas art stands in for the Civitai result so the
+  // whole pipeline (scaffold -> bytes -> Lua texture) is testable with zero
+  // spend. Live mode is deliberately NOT faked: it needs the SDK
+  // estimate -> consent -> submit -> poll consent path inside a registered
+  // app host, which this standalone shell does not have yet.
+  CivlingsHost.prototype.generate = function (prompt) {
+    if (!this.mock) {
+      this.onState('generation unavailable: needs the live Civitai host (app not registered yet)');
+      return false;
+    }
+    if (!this.balance || total(this.balance) < GEN_COST) {
+      this.onState('not enough mock Buzz to generate');
+      return false;
+    }
+    var cell = this.targetCell();
+    var art = mockTexture(prompt || 'decoration');
+    this.mockAdjust(-GEN_COST);
+    this._toGame({ type: 'gen_prop', c: cell.c, r: cell.r });
+    var self = this;
+    setTimeout(function () {
+      self._toGame({ type: 'gen_texture', c: cell.c, r: cell.r,
+                     w: art.w, h: art.h, data: art.data });
+    }, 700);
+    return true;
   };
 
   CivlingsHost.prototype._startMock = function () {
@@ -142,6 +196,37 @@
     this._applyViewer();
     this._applyBalance({ balance: MOCK_BALANCE });
   };
+
+  // Deterministic procedural stand-in for a generated texture: 128x128 RGBA.
+  function mockTexture(prompt) {
+    var seed = 7;
+    for (var i = 0; i < prompt.length; i++) seed = (seed * 31 + prompt.charCodeAt(i)) >>> 0;
+    function rnd() { seed = (seed * 1103515245 + 12345) >>> 0; return seed / 4294967296; }
+    var hue = Math.floor(rnd() * 360);
+    var cv = document.createElement('canvas');
+    cv.width = 128; cv.height = 128;
+    var g = cv.getContext('2d');
+    var grad = g.createLinearGradient(0, 0, 0, 128);
+    grad.addColorStop(0, 'hsl(' + hue + ',70%,62%)');
+    grad.addColorStop(1, 'hsl(' + ((hue + 60) % 360) + ',65%,34%)');
+    g.fillStyle = grad; g.fillRect(0, 0, 128, 128);
+    g.fillStyle = 'hsl(' + ((hue + 180) % 360) + ',85%,72%)';
+    g.beginPath(); g.arc(34 + rnd() * 60, 30 + rnd() * 30, 13, 0, 7); g.fill();
+    g.fillStyle = 'hsla(' + ((hue + 300) % 360) + ',60%,22%,0.55)';
+    g.beginPath(); g.moveTo(0, 128);
+    for (var x = 0; x <= 128; x += 16) g.lineTo(x, 84 + rnd() * 26);
+    g.lineTo(128, 128); g.fill();
+    g.fillStyle = 'rgba(255,255,255,0.92)';
+    g.font = 'bold 64px system-ui, sans-serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText((prompt.trim()[0] || '?').toUpperCase(), 64, 70);
+    var px = g.getImageData(0, 0, 128, 128).data;
+    var bin = '';
+    for (var j = 0; j < px.length; j += 8192) {
+      bin += String.fromCharCode.apply(null, px.subarray(j, j + 8192));
+    }
+    return { w: 128, h: 128, data: btoa(bin) };
+  }
 
   window.CivlingsHost = CivlingsHost;
   window.CivlingsHost.total = total;

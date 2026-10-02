@@ -229,3 +229,58 @@ first worker:
   logged cell is the target — 6/6 PASS, screenshots
   `civlings/screenshots/02_grid.png` (grid at spawn) and `03_moved.png`
   (after the walk to (8,7)).
+
+## Civlings Phase 3 — Jev system + generated prop textures (2026-10-02)
+
+The `civlings/` game loop is now playable end-to-end (mock economy):
+
+- **Jev state machine** (`main/jev.lua`): IDLE → MOVING → WORKING →
+  COOLDOWN over 4 task types (Harvest/Craft/Service/Expedition).
+  Yield = Base × (1 + BiomeAffinityBonus) × StatModifier — Civling #1
+  (STA 7, PRO 6, AFF 8, affinity biome = the city's Overgrown Sunken
+  Ruins) harvests for exactly 12 × 1.25 × 1.1 = **+17 Buzz**; stamina
+  drains 1.5/s while working, regens otherwise. The Civling pantomimes
+  work (arms raised) and reports every transition to the HUD.
+- **Generated props**: prompt in the wrapper → JS canvas "mock art"
+  (deterministic, seeded by the prompt — stands in for the Civitai
+  result) → RGBA bytes base64 → scaffold slab appears on the target
+  tile instantly (`PROP SCAFFOLD`) → the texture lands ~0.7s later
+  on a UV display card (`PROP TEXTURED`). Generation debits 10 Buzz,
+  Jev yields credit the balance (mock pools only — live mode doesn't
+  fake it: it needs the SDK estimate → consent → submit → poll flow
+  inside a registered app host, which is the next gate).
+- **HUD**: Civling card (stats, state, stamina, session earnings),
+  4 Jev buttons acting on the last clicked tile, prompt + Generate,
+  live balance. Verified by `civlings/tools/verify-phase3.mjs` (10/10)
+  + Phase 2 suite still green (6/6); screenshots
+  `civlings/screenshots/04_prop.png`, `05_hud.png`.
+
+### Gotchas found this phase
+- **`handle(self, msg)` shadows the `msg` API** — inside, `msg.post`
+  is a nil field on the message table. Rename params that collide
+  with Defold API globals (`msg`, `go`, `sys`…).
+- **Defold message payloads cap at ~2 KB** ("buffer (2040 bytes) too
+  small for table"). Never `msg.post` big data: `gen_texture` payloads
+  are stashed in the game page (`game-bridge.js` `textureData(key)`)
+  and Lua pulls them with `html5.run`.
+- **`image` module is nil** (headless build): decode in JS, ship raw
+  RGBA. Texture constants live in `graphics.*` (`TEXTURE_TYPE_2D`,
+  `TEXTURE_FORMAT_RGBA`); `resource.create_texture(path, params,
+  buffer)` → pass the result to `go.set("#model", "texture0", tex)`.
+  Buffer streams are **byte-indexed numerically** (`stream[i] = byte`),
+  not per-element tables.
+- Shader UV attribute is **`texcoord0`** (a wrong name compiles fine
+  and samples one constant texel — the flat-color card). Sampler
+  enums are `FILTER_MODE_MIN_*` / `FILTER_MODE_MAG_*` (extracted from
+  bob.jar strings); fragment sampling uses `texture()`, not
+  `texture2D()`, under the SPIR-V pipeline. **`set_texture` is a
+  reserved engine message id** (has its own schema — ours is
+  `apply_texture`).
+- `collectionfactory.create` returns ids keyed by `hash("/localname")`
+  — spawn handles come from `ids[hash("/prop")]`, not the return value
+  used as a URL.
+- Base64 decoder: mask the accumulator (`buf = buf % 2^bits`) after
+  each emitted byte or long inputs overflow into NaN.
+- Synthetic input in tests: use move + down + **hold ~150ms** + up;
+  back-to-back down/up gets coalesced by the engine's frame sampling
+  (worse under SwiftShader). The same applies to verify-phase2.

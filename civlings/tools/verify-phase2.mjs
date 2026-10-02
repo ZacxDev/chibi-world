@@ -68,7 +68,9 @@ const winW = Math.round(box.width), winH = Math.round(box.height);
 const TARGET = { c: 8, r: 7 };
 const pt = cellScreenPoint(TARGET.c, TARGET.r, winW, winH);
 await page.mouse.move(box.x + pt.x, box.y + (winH - pt.yFromBottom));
-await page.mouse.down(); await page.mouse.up();
+await page.mouse.down();
+await new Promise((r) => setTimeout(r, 150)); // hold so the engine samples the press
+await page.mouse.up();
 results.push([`click targets cell (${TARGET.c},${TARGET.r})`,
   await waitFor(new RegExp(`CIVLING GOTO \\(${TARGET.c},${TARGET.r}\\)`), 'GOTO target cell', 15000)]);
 results.push(['civling arrived at target',

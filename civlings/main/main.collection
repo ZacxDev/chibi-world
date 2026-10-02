@@ -144,3 +144,12 @@ embedded_instances {
     z: 0
   }
 }
+embedded_instances {
+  id: "propstore"
+  data: "embedded_components {\n  id: \"propfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/prop.collection\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

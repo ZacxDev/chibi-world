@@ -21,7 +21,15 @@
   .bar { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
   button { background: #2b5cff; color: #fff; border: 0; border-radius: 6px; padding: 7px 14px; font: inherit; cursor: pointer; }
   button:hover { background: #3a68ff; }
-  #log { flex: 1; color: #9aa0ad; font-family: ui-monospace, monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  button.task { background: #23262e; border: 1px solid #343845; }
+  button.task:hover { background: #2c303c; }
+  #log { color: #9aa0ad; font-family: ui-monospace, monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .panel { margin-top: 10px; background: #17181c; border: 1px solid #26272e; border-radius: 8px; padding: 10px 12px; display: grid; gap: 8px; }
+  .panel .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  #civ-state { background: #26331f; color: #b6e388; border-radius: 4px; padding: 1px 7px; font-weight: 600; font-size: 12.5px; }
+  #civ-stats, .dim { color: #9aa0ad; font-size: 12.5px; }
+  #civ-earned b { color: #ffd53d; }
+  #prompt { flex: 1; min-width: 180px; background: #1f2126; color: #e8eaed; border: 1px solid #2c2e36; border-radius: 6px; padding: 7px 10px; font: inherit; }
 </style>
 </head>
 <body>
@@ -34,6 +42,30 @@
 </header>
 <main>
   <iframe id="game-frame" src="game/index.html" title="Civlings game"></iframe>
+
+  <div class="panel">
+    <div class="row">
+      <b>Civling #1</b>
+      <span id="civ-stats">stats pending…</span>
+      <span id="civ-state">IDLE</span>
+      <span class="dim">Stamina <span id="civ-stamina">100</span>/100</span>
+      <span id="civ-earned">Session earned: <b>0 Buzz</b></span>
+    </div>
+    <div class="row">
+      <span class="dim">Jev:</span>
+      <button class="task" data-task="harvest" type="button">🌾 Harvest</button>
+      <button class="task" data-task="craft" type="button">🔨 Craft</button>
+      <button class="task" data-task="service" type="button">🛎️ Service</button>
+      <button class="task" data-task="expedition" type="button">🧭 Expedition</button>
+      <span class="dim">Target: <span id="sel-cell">civling tile (4,4)</span></span>
+    </div>
+    <div class="row">
+      <input id="prompt" type="text" value="neon lamp" aria-label="Decoration prompt">
+      <button id="gen-btn" type="button">Generate prop (−10 Buzz)</button>
+      <span class="dim">Mock generation: procedural art stands in for the Civitai result.</span>
+    </div>
+  </div>
+
   <div class="bar">
     <button id="ping-btn" type="button">Ping game (bridge test)</button>
     <span id="log">wrapper ready; waiting for game…</span>
@@ -44,6 +76,7 @@
   var frame = document.getElementById('game-frame');
   var logEl = document.getElementById('log');
   function log(msg) { logEl.textContent = msg; }
+  var earned = 0;
 
   var host = new window.CivlingsHost({
     gameFrame: frame,
@@ -53,6 +86,8 @@
         log('mock mode (no Civitai host) — viewer/balance are sample data');
       } else if (state === 'live') {
         log('connected to Civitai host');
+      } else {
+        log(state);
       }
     },
     onViewer: function (viewer) {
@@ -65,12 +100,63 @@
     }
   });
 
+  function updateStamina(ev) {
+    if (typeof ev.stamina === 'number') {
+      document.getElementById('civ-stamina').textContent = ev.stamina;
+    }
+  }
+
   window.addEventListener('message', function (e) {
     var d = e.data;
     if (!d || d.civlings !== 'from-lua' || !d.msg) return;
-    if (d.msg.type === 'lua_ready') { host.resendState(); log('game is up (Lua ready) — bridge live'); }
-    else if (d.msg.type === 'pong') log('bridge round-trip OK: game answered pong');
-    else log('game -> wrapper: ' + JSON.stringify(d.msg));
+    var m = d.msg;
+    if (m.type === 'lua_ready') { host.resendState(); log('game is up (Lua ready) — bridge live'); }
+    else if (m.type === 'pong') log('bridge round-trip OK: game answered pong');
+    else if (m.type === 'civling_stats') {
+      host.stats = m;
+      document.getElementById('civ-stats').textContent =
+        'STA ' + m.stamina + ' · PRO ' + m.proficiency + ' · AFF ' + m.affinity +
+        ' (' + m.affinity_biome + ')';
+      log('civling stats received');
+    }
+    else if (m.type === 'cell' && m.kind === 'selected') {
+      host.selectedCell = { c: m.c, r: m.r };
+      document.getElementById('sel-cell').textContent = 'tile (' + m.c + ',' + m.r + ')';
+      log('tile selected (' + m.c + ',' + m.r + ')');
+    }
+    else if (m.type === 'cell' && m.kind === 'civling') {
+      host.civlingCell = { c: m.c, r: m.r };
+    }
+    else if (m.type === 'jev') {
+      document.getElementById('civ-state').textContent = m.state + (m.task ? ' · ' + m.task : '');
+      updateStamina(m);
+      log('jev: ' + m.state + (m.task ? ' (' + m.task + ')' : ''));
+    }
+    else if (m.type === 'jev_rejected') log('jev rejected: ' + m.reason);
+    else if (m.type === 'yield') {
+      earned += m.amount;
+      document.querySelector('#civ-earned b').textContent = earned + ' Buzz';
+      host.mockAdjust(m.amount);
+      updateStamina(m);
+      log('jev complete: +' + m.amount + ' Buzz (' + m.task + ')');
+    }
+    else if (m.type === 'prop') log('prop ' + m.phase + ' at (' + m.c + ',' + m.r + ')');
+    else log('game -> wrapper: ' + JSON.stringify(m));
+  });
+
+  document.querySelectorAll('button.task').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var cell = host.assignJev(btn.getAttribute('data-task'));
+      log('jev assigned: ' + btn.getAttribute('data-task') + ' at (' + cell.c + ',' + cell.r + ')');
+    });
+  });
+
+  document.getElementById('gen-btn').addEventListener('click', function () {
+    var prompt = document.getElementById('prompt').value;
+    var cell = host.targetCell();
+    if (host.generate(prompt)) {
+      log('generating "' + prompt + '" for tile (' + cell.c + ',' + cell.r + ')…');
+    }
   });
 
   document.getElementById('ping-btn').addEventListener('click', function () {

@@ -11,6 +11,7 @@
   'use strict';
   if (window.CivlingsGame) return;
   var inbox = [];
+  var textures = {}; // "c,r" -> { w, h, data } — too big for Defold messages
   window.CivlingsGame = {
     luaReady: function () {
       window.parent.postMessage({ civlings: 'from-lua', msg: { type: 'lua_ready' } }, window.location.origin);
@@ -23,10 +24,21 @@
     },
     fromLua: function (obj) {
       window.parent.postMessage({ civlings: 'from-lua', msg: obj }, window.location.origin);
+    },
+    textureData: function (key) {
+      var t = textures[key];
+      return t ? t.data : '';
     }
   };
   window.addEventListener('message', function (e) {
     var d = e.data;
-    if (d && d.civlings === 'to-lua' && d.msg) inbox.push(d.msg);
+    if (!d || d.civlings !== 'to-lua' || !d.msg) return;
+    var m = d.msg;
+    if (m.type === 'gen_texture' && m.data) {
+      textures[m.c + ',' + m.r] = { w: m.w, h: m.h, data: m.data };
+      inbox.push({ type: 'gen_texture', c: m.c, r: m.r, w: m.w, h: m.h });
+    } else {
+      inbox.push(m);
+    }
   });
 })();

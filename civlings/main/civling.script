@@ -1,13 +1,36 @@
--- The first Civling: grid-bound worker with click-to-move (BFS path) and
--- the walk-cycle rig inherited from the proof-of-concept player.
+-- The first Civling: a grid-bound worker. Click to move (IDLE only); Jev
+-- assignments (bridge -> message) drive the task state machine in jev.lua.
 local iso = require("main.iso")
+local jev = require("main.jev")
+local gamestate = require("main.gamestate")
 
 local SPEED = 3.2
+local CITY_BIOME = "ruins" -- Genesis City biome: Overgrown Sunken Ruins
+-- Civling #1's rolled stats (deterministic for now; generation rolls later).
+local STATS = { stamina = 7, proficiency = 6, affinity = 8, affinity_biome = "ruins" }
 
 local function wrap_angle(a)
     while a > math.pi do a = a - 2 * math.pi end
     while a < -math.pi do a = a + 2 * math.pi end
     return a
+end
+
+local function to_js(self, event)
+    if self.jev and event.type ~= "civling_stats" then event.stamina = math.floor(self.jev.stamina + 0.5) end
+    if gamestate.bridge_url then
+        msg.post(gamestate.bridge_url, "to_js", { event = event })
+    end
+end
+
+local function set_path_to(self, c, r)
+    self.path = iso.find_path(self.cell.c, self.cell.r, c, r)
+    if #self.path == 0 then
+        jev.arrived(self.jev)
+        if self.jev.state == "WORKING" then
+            print("JEV STATE WORKING (" .. self.jev.task .. ")")
+            to_js(self, { type = "jev", state = "WORKING", task = self.jev.task })
+        end
+    end
 end
 
 function init(self)
@@ -18,14 +41,42 @@ function init(self)
     self.yaw = math.atan2(-0.70711, -0.70711) -- face the camera (+x/+z)
     self.walk_phase = 0
     self.time = 0
+    self.demo_done = false
+    self.jev = jev.new(STATS, CITY_BIOME)
     go.set_rotation(vmath.quat_rotation_y(self.yaw))
+    gamestate.civling_url = msg.url()
     print("CIVLING READY at (" .. self.cell.c .. "," .. self.cell.r .. ")")
+    print("CIVLING STATS stamina=" .. STATS.stamina .. " proficiency=" .. STATS.proficiency
+        .. " affinity=" .. STATS.affinity .. " (" .. STATS.affinity_biome .. ")")
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("announce_stats") then
+        to_js(self, { type = "civling_stats", stamina = STATS.stamina,
+            proficiency = STATS.proficiency, affinity = STATS.affinity,
+            affinity_biome = STATS.affinity_biome, city_biome = CITY_BIOME })
+    elseif message_id == hash("jev_assign") then
+        local ok, err = jev.assign(self.jev, message.task, message.c, message.r)
+        if ok then
+            print("JEV ASSIGNED " .. message.task .. " (" .. message.c .. "," .. message.r .. ")")
+            to_js(self, { type = "jev", state = "MOVING", task = message.task })
+            set_path_to(self, message.c, message.r)
+        else
+            print("JEV REJECTED " .. tostring(err))
+            to_js(self, { type = "jev_rejected", reason = err })
+        end
+    end
 end
 
 function on_input(self, action_id, action)
     if action_id == hash("click") and action.pressed then
         local w, h = window.get_size()
         local c, r = iso.pick(action.x, action.y, w, h)
+        to_js(self, { type = "cell", kind = "selected", c = c, r = r })
+        if self.jev.state ~= "IDLE" then
+            print("CIVLING BUSY (" .. self.jev.state .. ")")
+            return
+        end
         self.path = iso.find_path(self.cell.c, self.cell.r, c, r)
         print("CIVLING GOTO (" .. c .. "," .. r .. ") via " .. #self.path .. " cells")
     end
@@ -33,6 +84,12 @@ end
 
 function update(self, dt)
     self.time = self.time + dt
+    -- Native (off-HTML5) demo: run one harvest Jev so headless logs show it.
+    if not html5 and not self.demo_done and self.time > 2 then
+        self.demo_done = true
+        msg.post(".", "jev_assign", { task = "harvest", c = self.cell.c, r = self.cell.r })
+    end
+
     local pos = go.get_position()
     local moving = false
     if #self.path > 0 then
@@ -48,6 +105,12 @@ function update(self, dt)
             table.remove(self.path, 1)
             if #self.path == 0 then
                 print("CIVLING ARRIVED (" .. self.cell.c .. "," .. self.cell.r .. ")")
+                to_js(self, { type = "cell", kind = "civling", c = self.cell.c, r = self.cell.r })
+                if self.jev.state == "MOVING" then
+                    jev.arrived(self.jev)
+                    print("JEV STATE WORKING (" .. self.jev.task .. ")")
+                    to_js(self, { type = "jev", state = "WORKING", task = self.jev.task })
+                end
             end
         else
             pos.x = pos.x + (dx / dist) * step
@@ -63,7 +126,18 @@ function update(self, dt)
     end
     go.set_position(pos)
 
-    -- walk cycle + idle (rig layout shared with the PoC player)
+    local ev = jev.update(self.jev, dt)
+    if ev and ev.kind == "yield" then
+        print("JEV YIELD +" .. ev.amount .. " (" .. ev.task .. ")")
+        to_js(self, { type = "yield", amount = ev.amount, task = ev.task })
+        print("JEV STATE COOLDOWN")
+        to_js(self, { type = "jev", state = "COOLDOWN", task = ev.task })
+    elseif ev and ev.kind == "idle" then
+        print("JEV STATE IDLE")
+        to_js(self, { type = "jev", state = "IDLE" })
+    end
+
+    -- walk cycle / work pantomime / idle (rig layout from the PoC player)
     local rig_pos = go.get_position("rig")
     local bob
     if moving then
@@ -74,6 +148,14 @@ function update(self, dt)
         go.set_rotation(vmath.quat_rotation_x(-s * 0.9), "leg_l")
         go.set_rotation(vmath.quat_rotation_x(s * 0.9), "leg_r")
         bob = math.abs(math.sin(self.walk_phase)) * 0.09
+    elseif self.jev.state == "WORKING" then
+        self.walk_phase = self.walk_phase + dt * 2 * math.pi * 2.6
+        local s = math.sin(self.walk_phase)
+        go.set_rotation(vmath.quat_rotation_x(-1.9 + s * 0.5), "arm_l")
+        go.set_rotation(vmath.quat_rotation_x(-1.9 - s * 0.5), "arm_r")
+        go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+        go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+        bob = math.abs(math.sin(self.walk_phase)) * 0.05
     else
         go.set_rotation(vmath.quat_rotation_x(0), "arm_l")
         go.set_rotation(vmath.quat_rotation_x(0), "arm_r")

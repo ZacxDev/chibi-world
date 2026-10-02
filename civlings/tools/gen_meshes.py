@@ -71,20 +71,21 @@ def face_normal(p0, p1, p2):
     return norm3(cross(sub(p1, p0), sub(p2, p0)))
 
 
-def emit_mesh(positions, triangles, color):
+def emit_mesh(positions, triangles, color, uvs=None):
     """positions: list of xyz tuples; triangles: list of index triples;
-    color: rgb tuple in [0,1]; returns (accessor_count, buffer_bytes)."""
+    color: rgb tuple in [0,1]; optional uvs: per-position (u, v) pairs,
+    carried through the per-face vertex duplication. Default (0, 0)."""
     pos, nor, col, uv = [], [], [], []
     idx = []
     for (i0, i1, i2) in triangles:
         p0, p1, p2 = positions[i0], positions[i1], positions[i2]
         n = face_normal(p0, p1, p2)
         c = shade(color, n)
-        for p in (p0, p1, p2):
+        for i, p in enumerate((p0, p1, p2)):
             pos.append(p)
             nor.append(n)
             col.append(c)
-            uv.append((0.0, 0.0))
+            uv.append(uvs[(i0, i1, i2)[i]] if uvs else (0.0, 0.0))
             idx.append(len(pos) - 1)
 
     def pack(fmt, items):
@@ -203,6 +204,17 @@ def tilebox(w=1.9, h=0.12, d=1.9, cy=None):
         (1, 2, 6), (1, 6, 5),  # +X
     ]
     return p, t
+
+
+
+def card_geo():
+    """Vertical display card for generated art: 1.5x1.5, front face +Z,
+    real 0..1 UVs (the only mesh that carries them)."""
+    p = [(-0.75, 0.55, 0.06), (0.75, 0.55, 0.06),
+         (0.75, 2.05, 0.06), (-0.75, 2.05, 0.06)]
+    t = [(0, 1, 2), (0, 2, 3)]
+    uvs = [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)]
+    return p, t, uvs
 
 
 def prism(w=4.4, h=1.6, d=3.9, cy=0.0):
@@ -343,6 +355,8 @@ COLORS = {
     "tile_core": (0.58, 0.86, 0.62),
     "tile_outer": (0.60, 0.72, 0.88),
     "tile_edge": (0.74, 0.80, 0.58),
+    "scaffold": (0.82, 0.83, 0.87),
+    "card": (1.0, 1.0, 1.0),
 }
 
 # aliases for baked-scale mesh variants (same colors, geometry pre-scaled)
@@ -406,6 +420,8 @@ MESHES = [
     ("box_tile_core", tilebox, dict(w=1.9, h=0.12, d=1.9, cy=0.06)),
     ("box_tile_outer", tilebox, dict(w=1.9, h=0.09, d=1.9, cy=0.045)),
     ("box_tile_edge", tilebox, dict(w=1.9, h=0.06, d=1.9, cy=0.03)),
+    ("box_scaffold", cube, dict(w=1.6, h=1.6, d=0.08, cy=1.3)),
+    ("plane_card", None, None),  # special-cased in main() for UVs
     ("cone_mountain", cone, dict(r=7.0, h=9.0, seg=9)),
     ("cone_mountain_snow", cone, dict(r=2.19, h=3.25, seg=9)),
 ]
@@ -426,8 +442,12 @@ def main():
         if color_key is None or color_key not in COLORS:
             raise SystemExit("No color for " + name)
         base = COLORS[color_key]
-        pos, tris = fn(**kw)
-        gltf = emit_mesh(pos, tris, base)
+        if name == "plane_card":
+            pos, tris, uvs = card_geo()
+            gltf = emit_mesh(pos, tris, base, uvs)
+        else:
+            pos, tris = fn(**kw)
+            gltf = emit_mesh(pos, tris, base)
         path = os.path.join(OUT_DIR, name + ".gltf")
         with open(path, "w") as f:
             json.dump(gltf, f, separators=(",", ":"))

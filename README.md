@@ -103,4 +103,22 @@ node civlings/tools/verify-web.mjs       # ALL GREEN expected
   pick math), screenshots `civlings/screenshots/02_grid.png` and
   `03_moved.png`.
 
-Next phase: generation + the Jev task system.
+### Phase 3: Jev task system + generated props
+
+- **Jev system**: the Civling runs the IDLE → MOVING → WORKING →
+  COOLDOWN task machine (Harvest / Craft / Service / Expedition) with
+  stats (Stamina, Proficiency, Affinity) and the spec yield formula —
+  a Harvest at the current city banks +17 Buzz. The wrapper HUD shows
+  state, stamina and session earnings live.
+- **Generated props**: type a prompt, pay 10 Buzz, and a decoration
+  appears on the target tile — first a scaffolding slab, then the
+  generated texture on a display card. In standalone/mock mode the
+  artwork is procedural (deterministic per prompt); the real Civitai
+  generation path (estimate → consent → submit → poll) turns on when
+  the game is hosted as a registered Civitai App.
+- Verified: `civlings/tools/verify-phase3.mjs` (10/10, including the
+  exact Buzz arithmetic 7,750 + 17 − 10 = 7,757) and the Phase 2 suite
+  (6/6). Screenshots `civlings/screenshots/04_prop.png`, `05_hud.png`.
+
+Next gate: register Civlings as a Civitai App and turn on the live
+generation path.

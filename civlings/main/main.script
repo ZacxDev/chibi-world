@@ -1,6 +1,7 @@
 -- Civlings world spawner: the 10x10 Genesis City grid, the first Civling,
 -- and a deterministic border planting (no RNG, so screenshots are stable).
 local iso = require("main.iso")
+local gamestate = require("main.gamestate")
 
 function init(self)
     local counts = { plaza = 0, core = 0, outer = 0, edge = 0 }
@@ -43,7 +44,42 @@ function init(self)
             vmath.vector3(x, y, z), nil, nil, 1 + (i % 3) * 0.25)
     end
 
+    self.props = {}
+    gamestate.game_url = msg.url()
+
     print("CIVLINGS GRID READY: 100 tiles (plaza " .. counts.plaza ..
         ", core " .. counts.core .. ", outer " .. counts.outer ..
         ", edge " .. counts.edge .. ")")
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("gen_prop") then
+        local key = message.c .. "," .. message.r
+        if not self.props[key] then
+            local x, z = iso.cell_to_world(message.c, message.r)
+            local y = iso.TIER_TOP[iso.tier(message.c, message.r)]
+            local rot = vmath.quat_rotation_y(math.pi / 4) -- face the camera
+            local ids = collectionfactory.create(
+                "propstore#propfactory", vmath.vector3(x, y, z), rot)
+            -- collectionfactory returns ids keyed by hash() of the local path
+            self.props[key] = ids[hash("/prop")]
+        end
+        print("PROP SCAFFOLD (" .. key .. ")")
+        if gamestate.bridge_url then
+            msg.post(gamestate.bridge_url, "to_js",
+                { event = { type = "prop", phase = "scaffold", c = message.c, r = message.r } })
+        end
+    elseif message_id == hash("gen_texture") then
+        local url = self.props[message.c .. "," .. message.r]
+        if url then
+            -- "set_texture" is a reserved engine message (has its own
+            -- schema); ours is apply_texture.
+            msg.post(url, "apply_texture",
+                { c = message.c, r = message.r, w = message.w, h = message.h })
+            if gamestate.bridge_url then
+                msg.post(gamestate.bridge_url, "to_js",
+                    { event = { type = "prop", phase = "textured", c = message.c, r = message.r } })
+            end
+        end
+    end
 end
