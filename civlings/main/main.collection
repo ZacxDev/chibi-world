@@ -11,7 +11,7 @@ embedded_instances {
 }
 embedded_instances {
   id: "world"
-  data: "embedded_components {\n  id: \"ground\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/plane_ground.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"pond\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/disc_water.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 7\n    y: 0.06\n    z: 3\n  }\n}\nembedded_components {\n  id: \"pond_in\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/disc_water_inner.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 7\n    y: 0.09\n    z: 3\n  }\n}\nembedded_components {\n  id: \"path1\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_path.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 0.03\n    z: 2.6\n  }\n}\nembedded_components {\n  id: \"path2\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_path.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 0.03\n    z: -3.4\n  }\n}\nembedded_components {\n  id: \"path3\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_path_slim.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0.4\n    y: 0.03\n    z: -3.9\n  }\n}\n"
+  data: "embedded_components {\n  id: \"ground\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/plane_ground.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
   position {
     x: 0
     y: 0
@@ -114,6 +114,30 @@ embedded_instances {
 embedded_instances {
   id: "bridge"
   data: "components {\n  id: \"script\"\n  component: \"/main/bridge.script\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "camera_go"
+  data: "embedded_components {\n  id: \"camera\"\n  type: \"camera\"\n  data: \"aspect_ratio: 1.7777778\\nfov: 0.96\\nnear_z: 0.1\\nfar_z: 200.0\\nauto_aspect_ratio: 1\\northographic_projection: 1\\northographic_zoom: 28.0\\northographic_mode: ORTHO_MODE_FIXED\\n\"\n}\n"
+  position {
+    x: 19.62
+    y: 19.62
+    z: 19.62
+  }
+  rotation {
+    x: -0.27984814233312133
+    y: 0.3647051996310009
+    z: 0.11591689595929515
+    w: 0.8804762392171493
+  }
+}
+embedded_instances {
+  id: "tilefactories"
+  data: "embedded_components {\n  id: \"tile_plaza_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_plaza.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_core_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_core.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_outer_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_outer.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_edge_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_edge.collection\\\"\\n\"\n}\n"
   position {
     x: 0
     y: 0

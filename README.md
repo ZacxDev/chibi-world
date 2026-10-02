@@ -91,5 +91,16 @@ cd web && python3 -m http.server 8611 &  # then open http://127.0.0.1:8611/?mock
 node civlings/tools/verify-web.mjs       # ALL GREEN expected
 ```
 
-Next phases: iso grid + first Civling movement, then generation + the Jev
-task system.
+### Phase 2: isometric city grid + first Civling
+
+- **Fixed 45° isometric camera** (orthographic) over a **10×10 Genesis
+  City grid**: plaza / core / outer / edge tiers, stepped tile tops,
+  border planting outside the plots.
+- **First Civling**: the chibi humanoid spawns on the plaza. Click any
+  tile and it pathfinds there (BFS over the grid) with its walk cycle.
+- Verified end-to-end: `civlings/tools/verify-phase2.mjs` (6/6 PASS,
+  including a click whose target cell is computed from the game's own
+  pick math), screenshots `civlings/screenshots/02_grid.png` and
+  `03_moved.png`.
+
+Next phase: generation + the Jev task system.

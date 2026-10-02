@@ -183,6 +183,28 @@ def cube(w=1.0, h=1.0, d=1.0, cy=0.0):
     return p, t
 
 
+def tilebox(w=1.9, h=0.12, d=1.9, cy=None):
+    """Thin slab with OUTWARD winding. The shared cube() helper winds every
+    face inward; that reads fine on chunky boxes but turns thin slabs
+    inside-out under backface culling, so tiles get this dedicated box."""
+    if cy is None:
+        cy = h / 2
+    x, y, z = w / 2, h / 2, d / 2
+    p = [
+        (-x, cy - y, -z), (x, cy - y, -z), (x, cy + y, -z), (-x, cy + y, -z),
+        (-x, cy - y, z), (x, cy - y, z), (x, cy + y, z), (-x, cy + y, z),
+    ]
+    t = [
+        (3, 6, 2), (3, 7, 6),  # +Y top
+        (0, 5, 4), (0, 1, 5),  # -Y bottom
+        (0, 2, 1), (0, 3, 2),  # -Z
+        (4, 5, 6), (4, 6, 7),  # +Z
+        (0, 4, 7), (0, 7, 3),  # -X
+        (1, 2, 6), (1, 6, 5),  # +X
+    ]
+    return p, t
+
+
 def prism(w=4.4, h=1.6, d=3.9, cy=0.0):
     """Roof prism: ridge along Z, apex at (0, cy+h), bases at z=+-d/2."""
     x, z = w / 2, d / 2
@@ -317,6 +339,10 @@ COLORS = {
     "stem": (0.30, 0.62, 0.32),
     "mountain": (0.62, 0.68, 0.82),
     "mountain_snow": (0.94, 0.96, 1.0),
+    "tile_plaza": (0.95, 0.86, 0.64),
+    "tile_core": (0.58, 0.86, 0.62),
+    "tile_outer": (0.60, 0.72, 0.88),
+    "tile_edge": (0.74, 0.80, 0.58),
 }
 
 # aliases for baked-scale mesh variants (same colors, geometry pre-scaled)
@@ -376,6 +402,10 @@ MESHES = [
     ("sphere_cloud_a", sphere, dict(r=1.45, wseg=10, hseg=7, squash=0.42)),
     ("sphere_cloud_b", sphere, dict(r=0.85, wseg=10, hseg=7, squash=0.5)),
     ("sphere_cloud_c", sphere, dict(r=1.0, wseg=10, hseg=7, squash=0.48)),
+    ("box_tile_plaza", tilebox, dict(w=1.9, h=0.16, d=1.9, cy=0.08)),
+    ("box_tile_core", tilebox, dict(w=1.9, h=0.12, d=1.9, cy=0.06)),
+    ("box_tile_outer", tilebox, dict(w=1.9, h=0.09, d=1.9, cy=0.045)),
+    ("box_tile_edge", tilebox, dict(w=1.9, h=0.06, d=1.9, cy=0.03)),
     ("cone_mountain", cone, dict(r=7.0, h=9.0, seg=9)),
     ("cone_mountain_snow", cone, dict(r=2.19, h=3.25, seg=9)),
 ]

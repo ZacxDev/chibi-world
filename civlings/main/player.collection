@@ -3,7 +3,7 @@ scale_along_z: 0
 embedded_instances {
   id: "player"
   children: "rig"
-  data: "components {\n  id: \"script\"\n  component: \"/main/player.script\"\n}\n"
+  data: "components {\n  id: \"script\"\n  component: \"/main/civling.script\"\n}\n"
   position {
     x: 0
     y: 0
@@ -18,7 +18,6 @@ embedded_instances {
   children: "arm_r"
   children: "leg_l"
   children: "leg_r"
-  children: "camera_go"
   data: ""
   position {
     x: 0
@@ -78,20 +77,5 @@ embedded_instances {
     x: 0.13
     y: -0.55
     z: 0
-  }
-}
-embedded_instances {
-  id: "camera_go"
-  data: "embedded_components {\n  id: \"camera\"\n  type: \"camera\"\n  data: \"aspect_ratio: 1.7777778\\nfov: 0.96\\nnear_z: 0.1\\nfar_z: 200.0\\nauto_aspect_ratio: 1\\n\"\n}\n"
-  position {
-    x: 0
-    y: 2.4
-    z: 6
-  }
-  rotation {
-    x: -0.179
-    y: 0
-    z: 0
-    w: 0.9838
   }
 }

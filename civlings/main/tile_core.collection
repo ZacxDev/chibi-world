@@ -1,0 +1,11 @@
+name: "tile_core"
+scale_along_z: 0
+embedded_instances {
+  id: "tile"
+  data: "embedded_components {\n  id: \"tilem\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_tile_core.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

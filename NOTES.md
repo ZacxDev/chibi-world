@@ -192,3 +192,40 @@ the headless regression had never exercised graphics. Four real bugs:
   README_RUN.txt). Controls: WASD/arrows move, Space hop. Serve
   `html5-build/` over HTTP (needs WebGL2); COOP/COEP only for the
   pthread variant.
+
+## Civlings Phase 2 — isometric city grid (2026-10-02)
+
+The `civlings/` project now renders the Genesis City hub and moves its
+first worker:
+
+- **Fixed 45° isometric camera**: an orthographic camera GO on the
+  (+1,+1,+1) diagonal looking at the grid origin (no follow, no input).
+- **10×10 grid, 4 tiers** (`main/iso.lua`): Chebyshev rings from the
+  centre — plaza (4), core (12), outer (48), edge (36) — one baked tile
+  mesh per tier, tops stepped 0.16 → 0.06 units. Border trees/rocks and
+  the PoC mountains dress the outside; the PoC pond/paths were removed
+  from the `world` GO.
+- **First Civling** (`main/civling.script`): the chibi humanoid, spawned
+  on the plaza. Mouse clicks unproject through the camera basis onto the
+  ground plane (`iso.pick`), then BFS (`iso.find_path`) walks it
+  cell-to-cell with the walk-cycle rig. Prints `CIVLING READY at (c,r)`,
+  `CIVLING GOTO (c,r)`, `CIVLING ARRIVED (c,r)`.
+
+### Gotchas found this phase
+- Camera component fields are `orthographic_projection: 1` +
+  `orthographic_mode: ORTHO_MODE_FIXED` — there is no `orthographic`
+  field; bob rejects it (`dmGamesysDDF.CameraDesc.orthographic`).
+- `collectionfactory.create` URLs are scoped: `#id` only finds
+  components on the script's own GO. Factories on a sibling GO need the
+  full `tilefactories#tile_plaza_factory` form.
+- The shared `cube()` in `gen_meshes.py` winds every face **inward**
+  (normals point into the box). Chunky boxes read fine, but thin slabs
+  (0.06–0.16 tall) render inside-out under backface culling — the grid
+  showed half-diamonds and wall "spikes". Tiles use a dedicated
+  `tilebox()` with outward winding; winding verified per-face by cross
+  product.
+- Pick math is self-verifying: `tools/verify-phase2.mjs` clicks the
+  screen point computed with the *inverse* of `iso.pick` and asserts the
+  logged cell is the target — 6/6 PASS, screenshots
+  `civlings/screenshots/02_grid.png` (grid at spawn) and `03_moved.png`
+  (after the walk to (8,7)).
