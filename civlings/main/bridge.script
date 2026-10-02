@@ -55,6 +55,10 @@ local function handle(self, m)
         if gamestate.game_url then
             msg.post(gamestate.game_url, "gen_texture", { c = m.c, r = m.r, w = m.w, h = m.h })
         end
+    elseif m.type == "gen_remove" then
+        if gamestate.game_url then
+            msg.post(gamestate.game_url, "gen_remove", { c = m.c, r = m.r })
+        end
     end
 end
 

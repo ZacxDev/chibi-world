@@ -131,7 +131,9 @@ async function fpsMeasure(frame, seconds) {
   text = await bodyText();
   rec('session earnings total 118', /Session earned:\s*118/.test(text));
 
-  // busy rejection: expedition again, then immediately another task
+  // busy rejection: stamina tuning (drain 2.5/s, regen 2.5/s IDLE-only)
+  // leaves ~3 after expedition #1 — rest ~20s so the next one can start.
+  await sleep(20000);
   await clickBtn('Expedition');
   await sleep(1500);
   await clickBtn('Craft');
@@ -140,7 +142,7 @@ async function fpsMeasure(frame, seconds) {
   await waitFor(/JEV YIELD \+62 \(expedition\)/, 45000);
   await shot(page, 'P4-expedition.png');
 
-  // fatigue: stamina is now 100-9-15-12-24-24 = 16 regen-adjusted... read actual
+  // fatigue: 4 tasks cost 15+25+20+40 at 2.5/s drain; read the actual value
   text = await bodyText();
   const stamNow = Number((text.match(/Stamina\s*(\d+)/) || [])[1]);
   console.log('PLAYTEST stamina after 5 tasks:', stamNow);
@@ -156,7 +158,7 @@ async function fpsMeasure(frame, seconds) {
     { waitUntil: 'load', timeout: 30000 });
   await waitFor(/CIVLING RESTORED at \(4,4\) stamina=20/, 60000, 'restore20');
   await clickBtn('Expedition');
-  rec('tired rejection (stamina 20 < expedition cost 24)', await waitFor(/JEV REJECTED tired/, 20000));
+  rec('tired rejection (stamina 20 < expedition cost 40)', await waitFor(/JEV REJECTED tired/, 20000));
   await browser.close();
 }
 

@@ -148,6 +148,31 @@ function update(self, dt)
         to_js(self, { type = "jev", state = "IDLE" })
     end
 
+    -- progress bar over the civling's head + throttled progress to the page
+    if self.jev.state == "WORKING" then
+        if not self.bar_shown then
+            self.bar_shown = true
+            go.set_position(vmath.vector3(0, 2.15, 0), "bar_back")
+            go.set_position(vmath.vector3(0, 2.15, 0), "bar_fill")
+        end
+        local s = math.max(0.02, jev.progress(self.jev))
+        go.set_scale(vmath.vector3(s, 1, 1), "bar_fill")
+        local fp = go.get_position("bar_fill")
+        fp.x = -0.6 + 0.6 * s
+        go.set_position(fp, "bar_fill")
+        self.pbar_t = (self.pbar_t or 0) + dt
+        if self.pbar_t >= 0.25 then
+            self.pbar_t = 0
+            to_js(self, { type = "jev_progress", task = self.jev.task,
+                pct = math.floor(jev.progress(self.jev) * 100),
+                stamina = math.floor(self.jev.stamina) })
+        end
+    elseif self.bar_shown then
+        self.bar_shown = false
+        go.set_position(vmath.vector3(0, -5, 0), "bar_back")
+        go.set_position(vmath.vector3(0, -5, 0), "bar_fill")
+    end
+
     -- walk cycle / work pantomime / idle (rig layout from the PoC player)
     local rig_pos = go.get_position("rig")
     local bob
@@ -160,13 +185,52 @@ function update(self, dt)
         go.set_rotation(vmath.quat_rotation_x(s * 0.9), "leg_r")
         bob = math.abs(math.sin(self.walk_phase)) * 0.09
     elseif self.jev.state == "WORKING" then
-        self.walk_phase = self.walk_phase + dt * 2 * math.pi * 2.6
-        local s = math.sin(self.walk_phase)
-        go.set_rotation(vmath.quat_rotation_x(-1.9 + s * 0.5), "arm_l")
-        go.set_rotation(vmath.quat_rotation_x(-1.9 - s * 0.5), "arm_r")
-        go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
-        go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
-        bob = math.abs(math.sin(self.walk_phase)) * 0.05
+        -- per-task pantomime: each job reads differently at a glance
+        local task = self.jev.task
+        if task == "harvest" then
+            -- slow two-handed chop, rig dips on the downbeat
+            self.walk_phase = self.walk_phase + dt * 2 * math.pi * 1.1
+            local s = math.sin(self.walk_phase)
+            go.set_rotation(vmath.quat_rotation_x(-0.6 + s * 1.1), "arm_l")
+            go.set_rotation(vmath.quat_rotation_x(-0.6 + s * 1.1), "arm_r")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+            bob = -math.max(0, s) * 0.14
+        elseif task == "craft" then
+            -- hammering: right arm pounds fast, left arm braces the work
+            self.walk_phase = self.walk_phase + dt * 2 * math.pi * 4.0
+            local s = math.sin(self.walk_phase)
+            go.set_rotation(vmath.quat_rotation_x(-1.1), "arm_l")
+            go.set_rotation(vmath.quat_rotation_x(-2.2 + s * 0.7), "arm_r")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+            bob = math.abs(s) * 0.03
+        elseif task == "service" then
+            -- shopkeeper wave: right arm up, gentle bounce
+            local s = math.sin(self.time * 6)
+            go.set_rotation(vmath.quat_rotation_x(-0.3), "arm_l")
+            go.set_rotation(vmath.quat_rotation_x(-2.9 + s * 0.35), "arm_r")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+            bob = math.abs(math.sin(self.time * 3)) * 0.05
+        elseif task == "expedition" then
+            -- scouting: slow survey sweep of the horizon, arms low
+            go.set_rotation(vmath.quat_rotation_y(
+                self.yaw + math.sin(self.time * 0.8) * 0.8))
+            go.set_rotation(vmath.quat_rotation_x(-0.2), "arm_l")
+            go.set_rotation(vmath.quat_rotation_x(-0.2), "arm_r")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+            bob = math.sin(self.time * 2) * 0.02
+        else
+            self.walk_phase = self.walk_phase + dt * 2 * math.pi * 2.6
+            local s = math.sin(self.walk_phase)
+            go.set_rotation(vmath.quat_rotation_x(-1.9 + s * 0.5), "arm_l")
+            go.set_rotation(vmath.quat_rotation_x(-1.9 - s * 0.5), "arm_r")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_l")
+            go.set_rotation(vmath.quat_rotation_x(0), "leg_r")
+            bob = math.abs(math.sin(self.walk_phase)) * 0.05
+        end
     else
         go.set_rotation(vmath.quat_rotation_x(0), "arm_l")
         go.set_rotation(vmath.quat_rotation_x(0), "arm_r")

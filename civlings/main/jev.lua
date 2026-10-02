@@ -11,8 +11,8 @@ M.TASKS = {
 }
 M.COOLDOWN_SECS = 3
 M.STAMINA_MAX = 100
-M.STAMINA_DRAIN = 1.5 -- per second while WORKING
-M.STAMINA_REGEN = 5   -- per second otherwise
+M.STAMINA_DRAIN = 2.5 -- per second while WORKING
+M.STAMINA_REGEN = 2.5 -- per second while IDLE only (no regen on the move/cooldown)
 
 -- Yield = Base x (1 + BiomeAffinityBonus) x CivlingStatModifier
 function M.yield_for(stats, task_id, city_biome)
@@ -44,6 +44,14 @@ function M.set_stamina(j, v)
     j.stamina = math.max(0, math.min(M.STAMINA_MAX, v or j.stamina))
 end
 
+-- 0..1 completion fraction of the current WORKING task (0 otherwise).
+function M.progress(j)
+    if j.state ~= "WORKING" then return 0 end
+    local task = M.TASKS[j.task]
+    if not task then return 0 end
+    return math.min(1, j.t / task.secs)
+end
+
 function M.arrived(j)
     if j.state == "MOVING" then
         j.state, j.t = "WORKING", 0
@@ -64,7 +72,6 @@ function M.update(j, dt)
         end
     elseif j.state == "COOLDOWN" then
         j.t = j.t + dt
-        j.stamina = math.min(M.STAMINA_MAX, j.stamina + M.STAMINA_REGEN * dt)
         if j.t >= M.COOLDOWN_SECS then
             j.state, j.task, j.target = "IDLE", nil, nil
             return { kind = "idle" }

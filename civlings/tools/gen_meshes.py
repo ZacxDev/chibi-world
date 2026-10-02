@@ -326,6 +326,8 @@ COLORS = {
     "leg": (0.45, 0.55, 0.95),
     "eye": (0.14, 0.14, 0.18),
     "blush": (1.0, 0.62, 0.62),
+    "bar_back": (0.13, 0.15, 0.22),
+    "bar_fill": (0.35, 0.95, 0.45),
     "white": (1.0, 1.0, 1.0),
     "ground": (0.45, 0.83, 0.45),
     "path": (0.92, 0.80, 0.62),
@@ -421,6 +423,8 @@ MESHES = [
     ("box_tile_outer", tilebox, dict(w=1.9, h=0.09, d=1.9, cy=0.045)),
     ("box_tile_edge", tilebox, dict(w=1.9, h=0.06, d=1.9, cy=0.03)),
     ("box_scaffold", cube, dict(w=1.6, h=1.6, d=0.08, cy=1.3)),
+    ("box_bar_back", tilebox, dict(w=1.3, h=0.16, d=0.05, cy=0.0)),
+    ("box_bar_fill", tilebox, dict(w=1.2, h=0.10, d=0.07, cy=0.0)),
     ("plane_card", None, None),  # special-cased in main() for UVs
     ("cone_mountain", cone, dict(r=7.0, h=9.0, seg=9)),
     ("cone_mountain_snow", cone, dict(r=2.19, h=3.25, seg=9)),

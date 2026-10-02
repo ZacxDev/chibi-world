@@ -3,6 +3,8 @@ scale_along_z: 0
 embedded_instances {
   id: "player"
   children: "rig"
+  children: "bar_back"
+  children: "bar_fill"
   data: "components {\n  id: \"script\"\n  component: \"/main/civling.script\"\n}\n"
   position {
     x: 0
@@ -76,6 +78,25 @@ embedded_instances {
   position {
     x: 0.13
     y: -0.55
+    z: 0
+  }
+}
+
+embedded_instances {
+  id: "bar_back"
+  data: "embedded_components {\n  id: \"bar\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_bar_back.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: -5
+    z: 0
+  }
+}
+embedded_instances {
+  id: "bar_fill"
+  data: "embedded_components {\n  id: \"bar\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_bar_fill.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: -5
     z: 0
   }
 }

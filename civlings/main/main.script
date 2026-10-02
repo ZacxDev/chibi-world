@@ -69,6 +69,18 @@ function on_message(self, message_id, message)
             msg.post(gamestate.bridge_url, "to_js",
                 { event = { type = "prop", phase = "scaffold", c = message.c, r = message.r } })
         end
+    elseif message_id == hash("gen_remove") then
+        local key = message.c .. "," .. message.r
+        local url = self.props[key]
+        if url then
+            go.delete(url)
+            self.props[key] = nil
+            print("PROP REMOVED (" .. key .. ")")
+        end
+        if gamestate.bridge_url then
+            msg.post(gamestate.bridge_url, "to_js",
+                { event = { type = "prop", phase = "removed", c = message.c, r = message.r } })
+        end
     elseif message_id == hash("gen_texture") then
         local url = self.props[message.c .. "," .. message.r]
         if url then
