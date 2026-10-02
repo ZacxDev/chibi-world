@@ -6,15 +6,22 @@ test. All green as of 2026-10-01.
 
 ## Versions
 - Defold **1.13.2** (sha1 `20692b3a510a29dde4df99401f0881bfcec1d9fb`)
-- bob.jar 1.13.2 — **requires Java 25+** (class file v69). System Java is
-  OpenJDK 21, which fails with `UnsupportedClassVersionError`.
-  Fix: Eclipse Temurin 25 JRE at `~/workspace/tools/jdk25/`; `.mcp.json`
-  puts `~/workspace/tools/jdk25/bin` first on the MCP server's PATH.
-- dmengine_headless 1.13.2 (x86_64-linux)
+- bob.jar 1.13.2 — canonical download:
+  `https://d.defold.com/archive/20692b3a510a29dde4df99401f0881bfcec1d9fb/bob/bob.jar`.
+  **Requires Java 25+** (class file v69). System Java is OpenJDK 21, which
+  fails with `UnsupportedClassVersionError`. Fix: Eclipse Temurin 25 JRE at
+  `~/workspace/tools/jdk25/`; `.mcp.json` puts `~/workspace/tools/jdk25/bin`
+  first on the MCP server's PATH.
+- dmengine_headless 1.13.2 (x86_64-linux) — canonical download:
+  `https://d.defold.com/archive/20692b3a510a29dde4df99401f0881bfcec1d9fb/engine/x86_64-linux/dmengine_headless`
 - MCP server: `rochana-sadila/defold-mcp` (MIT), built with `npm run build`
 - Node v24.20.0
 
 ## Paths
+⚠ **The `~/workspace/tools/*` paths below are machine-specific** (the scratch
+machine this project was built on) — they will not exist on a fresh checkout.
+On other machines use the flake instead (see "Zero-setup via Nix" below); it
+downloads both artifacts from the canonical archive URLs above.
 - Toolchain: `~/workspace/tools/defold-toolchain/` (`bob.jar`, `dmengine_headless`, `version.json`)
 - JDK 25: `~/workspace/tools/jdk25/`
 - MCP server: `~/workspace/tools/defold-mcp/` (`dist/index.js`)
@@ -88,6 +95,32 @@ cd build/default && ~/workspace/tools/defold-toolchain/dmengine_headless
 - First-ever `bob` build downloads engine artifacts (~hundreds of MB through
   the egress proxy); the MCP 120s build cap may trip once before the cache
   warms — the driver handles this automatically.
+
+## Zero-setup via Nix (2026-10-02)
+
+`flake.nix` makes the repo runnable on a fresh machine with zero manual
+setup — verified end-to-end on NixOS:
+
+```sh
+nix run .#build-native    # headless build + run -> CHIBI WORLD READY / WORLD SPAWNED
+nix run .#bundle-html5    # fresh wasm-web release bundle -> html5-build/
+nix develop               # bob, dmengine_headless, python3 (generators), node (tools/), zip
+```
+
+It pins `bob.jar` and `dmengine_headless` **by hash** from the canonical
+`d.defold.com/archive/20692b3a…/` URLs above (Temurin 25 for Java) and
+works around two walls hit when building on NixOS:
+
+1. **bob 1.13.2 needs Java 25+** — the system JDK (21) fails with
+   `UnsupportedClassVersionError`. The flake uses `temurin-jre-bin-25`.
+2. **bob unpacks bundled native libs AND executables** (`libmodelc_shared.so`,
+   `gltf_validator`, …) **into a fresh `/tmp` dir on every run** and
+   `System.load`/exec's them. On NixOS the `.so`s need `libstdc++`/X11 and the
+   executables need `/lib64/ld-linux` — none in default paths, and since the
+   unpack dir is ephemeral they cannot be patchelf'd in place. Fix: bob runs
+   the JVM inside an FHS env (`buildFHSEnv`) providing exactly those libs.
+   `dmengine_headless` is a plain dynamic binary → an `autoPatchelfHook`
+   derivation handles it.
 
 ## Phase 2 — chibi 3D world (2026-10-01)
 

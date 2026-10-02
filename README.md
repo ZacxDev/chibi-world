@@ -14,6 +14,24 @@ snow-capped mountains.
 
 ## Run it
 
+**Option 0 — zero setup (Nix):** the flake pins the whole Defold 1.13.2
+toolchain (bob.jar, `dmengine_headless`, Temurin 25) by hash and fixes the
+NixOS loader walls — no `nix-shell`, no manual downloads:
+
+```sh
+nix run .#build-native    # headless build + run (prints CHIBI WORLD READY)
+nix run .#bundle-html5    # wasm-web release bundle -> html5-build/
+nix develop               # shell: bob, dmengine_headless, python3, node
+```
+
+Serve the bundle over HTTP (WASM won't run from `file://`) and open it in a
+WebGL2 browser:
+
+```sh
+cd html5-build && python3 -m http.server 8080
+# open http://localhost:8080
+```
+
 **Option A — Defold editor:** open `tiny-game/game.project` in the Defold
 editor and hit Project → Build.
 
@@ -22,15 +40,6 @@ editor and hit Project → Build.
 ```sh
 # build + run headless (prints CHIBI WORLD READY)
 node drive-defold-mcp.mjs
-```
-
-**Option C — playable HTML5 build:** bundle with `bob` (`NOTES.md` has the
-exact commands; build per-platform — a stale native archive breaks wasm
-bundles) and serve the output over HTTP (WASM won't run from `file://`):
-
-```sh
-cd html5-build && python3 -m http.server 8080
-# open http://localhost:8080 in a WebGL2 browser
 ```
 
 Screenshots from an actual headless-Chrome playthrough are in
