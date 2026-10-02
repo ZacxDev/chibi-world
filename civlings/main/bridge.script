@@ -41,6 +41,11 @@ local function handle(self, m)
             msg.post(gamestate.civling_url, "jev_assign",
                 { task = m.task, c = m.c, r = m.r })
         end
+    elseif m.type == "restore" then
+        if gamestate.civling_url then
+            msg.post(gamestate.civling_url, "restore",
+                { c = m.c, r = m.r, stamina = m.stamina })
+        end
     elseif m.type == "gen_prop" then
         if gamestate.game_url then
             msg.post(gamestate.game_url, "gen_prop", { c = m.c, r = m.r })

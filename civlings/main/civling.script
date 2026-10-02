@@ -55,6 +55,17 @@ function on_message(self, message_id, message)
         to_js(self, { type = "civling_stats", stamina = STATS.stamina,
             proficiency = STATS.proficiency, affinity = STATS.affinity,
             affinity_biome = STATS.affinity_biome, city_biome = CITY_BIOME })
+    elseif message_id == hash("restore") then
+        -- page (re)hydrates us after a reload: position + stamina persist.
+        local c, r = message.c or self.cell.c, message.r or self.cell.r
+        self.cell = { c = c, r = r }
+        self.path = {}
+        jev.set_stamina(self.jev, message.stamina)
+        local wx, wz = iso.cell_to_world(c, r)
+        go.set_position(vmath.vector3(wx, 0, wz))
+        print("CIVLING RESTORED at (" .. c .. "," .. r .. ") stamina=" .. self.jev.stamina)
+        to_js(self, { type = "cell", kind = "civling", c = c, r = r })
+        to_js(self, { type = "jev", state = self.jev.state, stamina = self.jev.stamina })
     elseif message_id == hash("jev_assign") then
         local ok, err = jev.assign(self.jev, message.task, message.c, message.r)
         if ok then

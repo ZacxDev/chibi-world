@@ -284,3 +284,44 @@ The `civlings/` game loop is now playable end-to-end (mock economy):
 - Synthetic input in tests: use move + down + **hold ~150ms** + up;
   back-to-back down/up gets coalesced by the engine's frame sampling
   (worse under SwiftShader). The same applies to verify-phase2.
+
+## Phase 4 — persistence core + shared city (app v0.1.1)
+
+Decisions (Zacx, 2026-10-02): 1A persistence core, 2B score is pure score
+(buys nothing), 3 SHARED multiplayer world. Platform shape we built on:
+
+- Per-viewer KV: `useAppStorage` (`player:v1`: civling cell, stamina,
+  lifetime score, tasks, props placed). Caps: 64KB/value, 2MB/viewer.
+  Save = debounced 400ms writes on yield/cell/stamina-idle events; a
+  `playerReady` gate stops boot-time writes clobbering a saved value
+  before `get` resolves; consent for storage scopes is requested lazily
+  on first failure, and failure degrades to an on-screen honesty note.
+- Shared city: `useSharedStorage` (append-only votable list) +
+  `usePublishGenerationOutputs` (workflow output -> real scanned Image id)
+  + `useGatedImages` (per-viewer gated read). Prop placement appends
+  `{title, body, data:{kind:'prop', c, r, imageId}}`; readers fold
+  newest-wins per cell and texture via the gated URL. `hidden` images keep
+  their bare scaffold. Votes exist on entries; no vote UI yet.
+- Publish+share happens BEFORE local texture delivery: a device that can't
+  load the pixels must not lose the city write.
+- Low-poly LoRA: "Low Poly LoRA" model 432443 / version 481758 @0.85 on
+  SD XL 1.0 (body via buildWorkflowBody's loras), "low poly" trigger words
+  in the prompt. Server re-validates/re-prices — live proof = dev:live.
+- Generate failure order-of-stages: texture-load failure only affects THIS
+  device's pixels; the shared append stands.
+- Mock-host gotchas (verified in @civitai/blocks-react 0.58 harness):
+  storage is in-memory Maps with production quotas — a real page.reload()
+  wipes them; prove read paths with seeds instead. Dev-only seed knobs in
+  src/Harness.tsx: ?seedplayer, ?seedshared, ?seedimages (url-encoded
+  JSON). Gated image seeds MUST carry a rating posture (nsfwLevel +
+  contentRating, or ratingPending) or the transport drops IMAGES_RESULT
+  as malformed and getImages hangs — App guards with a 15s race anyway.
+- Lua: `restore` bridge message (bridge.script -> civling.script) teleports
+  the civling + `jev.set_stamina`. Restore only lands from the page; the
+  native demo auto-harvest is unaffected (native gate still green).
+- Playtest (tools/verify-playtest.mjs): 13/13 incl. all four tasks with
+  floor(base x 1.25 x 1.1 + 0.5) yields (17/28/11/62), busy + tired
+  rejections (seed stamina 20 < expedition's 24), seeded cold-load restore,
+  FPS ~40 idle / ~34 with 21 prop cards on SwiftShader (software floor).
+- Balance note worth keeping: stamina regen 5/s vs drain 1.5/s means
+  stamina only binds on chained long tasks — known, by design so far.

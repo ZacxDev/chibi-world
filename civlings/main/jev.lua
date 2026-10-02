@@ -40,6 +40,10 @@ function M.assign(j, task_id, c, r)
     return true
 end
 
+function M.set_stamina(j, v)
+    j.stamina = math.max(0, math.min(M.STAMINA_MAX, v or j.stamina))
+end
+
 function M.arrived(j)
     if j.state == "MOVING" then
         j.state, j.t = "WORKING", 0
