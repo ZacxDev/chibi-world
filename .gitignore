@@ -1,0 +1,18 @@
+# Defold build outputs
+build/
+.internal/
+*.dmengine
+# Generated bundles, debug builds, experiment dirs
+chibi-dbg/
+html5-build/
+html5-dbg/
+html5-min/
+html5-min2/
+html5-src/
+minproj/
+logs/
+# Packaged releases (ship as release assets, not in git)
+*.zip
+# OS / editor noise
+.DS_Store
+node_modules

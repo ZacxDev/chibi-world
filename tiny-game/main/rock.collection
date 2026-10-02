@@ -1,0 +1,11 @@
+name: "rock"
+scale_along_z: 0
+embedded_instances {
+  id: "rock"
+  data: "embedded_components {\n  id: \"rockm\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_rock.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 0.1\n    z: 0\n  }\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
