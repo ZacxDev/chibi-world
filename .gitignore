@@ -16,3 +16,4 @@ logs/
 # OS / editor noise
 .DS_Store
 node_modules
+civlings/web/game/

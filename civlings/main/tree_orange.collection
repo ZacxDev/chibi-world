@@ -1,0 +1,11 @@
+name: "tree"
+scale_along_z: 0
+embedded_instances {
+  id: "tree"
+  data: "embedded_components {\n  id: \"trunk\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cyl_trunk.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 0.55\n    z: 0\n  }\n}\nembedded_components {\n  id: \"foliage1\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_leaf_orange.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 1.85\n    z: 0\n  }\n}\nembedded_components {\n  id: \"foliage2\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_leaf2_orange.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0.35\n    y: 2.35\n    z: 0.1\n  }\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

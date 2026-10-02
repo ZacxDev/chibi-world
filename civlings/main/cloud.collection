@@ -1,0 +1,11 @@
+name: "cloud"
+scale_along_z: 0
+embedded_instances {
+  id: "cloud"
+  data: "components {\n  id: \"script\"\n  component: \"/main/cloud.script\"\n}\nembedded_components {\n  id: \"c1\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_cloud_a.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"c2\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_cloud_b.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: -1.1\n    y: -0.1\n    z: 0.15\n  }\n}\nembedded_components {\n  id: \"c3\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_cloud_c.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 1.15\n    y: -0.12\n    z: -0.1\n  }\n}\nembedded_components {\n  id: \"c4\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_cloud.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0.3\n    y: 0.25\n    z: 0.3\n  }\n}\n"
+  position {
+    x: 0
+    y: 10
+    z: 0
+  }
+}

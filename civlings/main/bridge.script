@@ -1,0 +1,46 @@
+-- Civlings Lua <-> JS bridge (HTML5 only).
+-- The game page defines window.CivlingsGame (see civlings/web/game-bridge.js):
+-- Lua polls window.CivlingsGame.drain() for JSON messages pushed by the
+-- wrapper page, and answers with window.CivlingsGame.fromLua({...}).
+-- On non-HTML5 builds `html5` is nil and this script is inert.
+
+local POLL_INTERVAL = 0.2
+
+function init(self)
+    self.poll_t = 0
+    self.viewer = nil
+    self.balance = nil
+    print("CIVLINGS READY")
+    if html5 then
+        html5.run("window.CivlingsGame && window.CivlingsGame.luaReady()")
+    end
+end
+
+local function handle(self, msg)
+    if msg.type == "ping" then
+        print("BRIDGE PING RECEIVED")
+        if html5 then
+            html5.run("window.CivlingsGame.fromLua({type:'pong'})")
+        end
+    elseif msg.type == "viewer" then
+        self.viewer = msg.viewer
+        print("BRIDGE VIEWER: " .. (msg.viewer and msg.viewer.username or "anonymous"))
+    elseif msg.type == "buzz_balance" then
+        self.balance = msg.balance
+        local total = (msg.balance.blue or 0) + (msg.balance.green or 0) + (msg.balance.yellow or 0)
+        print("BRIDGE BUZZ BALANCE: " .. total)
+    end
+end
+
+function update(self, dt)
+    if not html5 then return end
+    self.poll_t = self.poll_t + dt
+    if self.poll_t < POLL_INTERVAL then return end
+    self.poll_t = 0
+    local raw = html5.run("window.CivlingsGame ? window.CivlingsGame.drain() : ''")
+    if raw == nil or raw == "" then return end
+    local msgs = json.decode(raw)
+    for _, msg in ipairs(msgs) do
+        handle(self, msg)
+    end
+end

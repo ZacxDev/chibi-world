@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Civlings</title>
+<style>
+  /* Dark by default — never follows the OS/browser scheme (project rule). */
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #101113; color: #e8eaed; font: 14px/1.45 system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 14px; padding: 10px 14px; background: #17181c; border-bottom: 1px solid #26272e; }
+  header .brand { font-weight: 700; letter-spacing: .4px; }
+  header .spacer { flex: 1; }
+  #viewer { color: #c9ccd4; }
+  #balance { font-variant-numeric: tabular-nums; background: #1f2126; border: 1px solid #2c2e36; border-radius: 999px; padding: 3px 10px; }
+  #balance b { color: #ffd53d; }
+  #mock-badge { display: none; background: #5a3a00; color: #ffc94d; border-radius: 4px; padding: 2px 7px; font-size: 12px; font-weight: 600; }
+  main { padding: 10px; }
+  #game-frame { width: 100%; height: min(78vh, 700px); border: 1px solid #26272e; border-radius: 8px; background: #0b0c0e; }
+  .bar { display: flex; gap: 10px; align-items: center; margin-top: 10px; }
+  button { background: #2b5cff; color: #fff; border: 0; border-radius: 6px; padding: 7px 14px; font: inherit; cursor: pointer; }
+  button:hover { background: #3a68ff; }
+  #log { flex: 1; color: #9aa0ad; font-family: ui-monospace, monospace; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">CIVLINGS</span>
+  <span id="mock-badge">MOCK — not connected to Civitai</span>
+  <span class="spacer"></span>
+  <span id="viewer">Connecting…</span>
+  <span id="balance">Buzz: <b>—</b></span>
+</header>
+<main>
+  <iframe id="game-frame" src="game/index.html" title="Civlings game"></iframe>
+  <div class="bar">
+    <button id="ping-btn" type="button">Ping game (bridge test)</button>
+    <span id="log">wrapper ready; waiting for game…</span>
+  </div>
+</main>
+<script src="bridge.js"></script>
+<script>
+  var frame = document.getElementById('game-frame');
+  var logEl = document.getElementById('log');
+  function log(msg) { logEl.textContent = msg; }
+
+  var host = new window.CivlingsHost({
+    gameFrame: frame,
+    onState: function (state) {
+      if (state === 'mock') {
+        document.getElementById('mock-badge').style.display = 'inline-block';
+        log('mock mode (no Civitai host) — viewer/balance are sample data');
+      } else if (state === 'live') {
+        log('connected to Civitai host');
+      }
+    },
+    onViewer: function (viewer) {
+      document.getElementById('viewer').textContent = viewer
+        ? 'Signed in as ' + (viewer.username || 'player')
+        : 'Not signed in';
+    },
+    onBalance: function (balance, totalBuzz) {
+      document.querySelector('#balance b').textContent = totalBuzz.toLocaleString() + ' Buzz';
+    }
+  });
+
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || d.civlings !== 'from-lua' || !d.msg) return;
+    if (d.msg.type === 'lua_ready') { host.resendState(); log('game is up (Lua ready) — bridge live'); }
+    else if (d.msg.type === 'pong') log('bridge round-trip OK: game answered pong');
+    else log('game -> wrapper: ' + JSON.stringify(d.msg));
+  });
+
+  document.getElementById('ping-btn').addEventListener('click', function () {
+    host.pingGame();
+    log('ping sent to game…');
+  });
+</script>
+</body>
+</html>

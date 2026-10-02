@@ -1,0 +1,23 @@
+#version 140
+
+in highp vec4 position;
+in mediump vec4 color;
+in mediump vec3 normal;
+
+out mediump vec4 var_color;
+out mediump vec3 var_normal;
+
+uniform vs_uniforms
+{
+    mat4 mtx_worldview;
+    mat4 mtx_proj;
+    mat4 mtx_normal;
+};
+
+void main()
+{
+    vec4 p = mtx_worldview * vec4(position.xyz, 1.0);
+    var_color = color;
+    var_normal = normalize((mtx_normal * vec4(normal, 0.0)).xyz);
+    gl_Position = mtx_proj * p;
+}

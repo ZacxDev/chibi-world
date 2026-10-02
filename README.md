@@ -58,3 +58,38 @@ Screenshots from an actual headless-Chrome playthrough are in
 - `NOTES.md` — full build notes, quirks, and gotchas
 
 The world spawns deterministically (seed 1234).
+
+---
+
+## Civlings (Phase 1: Foundation & Auth)
+
+Civlings is the real game this project is becoming — a sandbox/economic sim
+with generative AI assets, shipped as a Defold game embedded in a Civitai
+App, with Buzz as the in-game currency. The chibi world above was its proof
+of concept.
+
+Phase 1 (in `civlings/`) is done and verified:
+
+- **Defold project** — clean base scaffolded from the proof-of-concept
+  patterns; boots headless (`CIVLINGS READY`).
+- **Civitai App wrapper** (`civlings/web/`) — dark-default shell that embeds
+  the game and speaks the Civitai app postMessage protocol
+  (`BLOCK_INIT`/`BLOCK_READY`, `GET_BUZZ_BALANCE` → `BUZZ_BALANCE_RESULT`).
+  Viewer identity and the Buzz balance (blue/green/yellow pools) render in
+  the header. Standalone runs use a clearly-labeled mock host.
+- **Lua ↔ JS bridge** — Lua polls `window.CivlingsGame.drain()` via
+  `html5.run`; the wrapper relays viewer/balance into the game and can ping
+  it. Verified end-to-end in headless Chrome
+  (`civlings/tools/verify-web.mjs`, screenshot
+  `civlings/screenshots/01_bridge.png`).
+
+Build/verify:
+
+```sh
+cd civlings && ./package-web.sh          # bob bundle -> web/game/ (+ bridge injection)
+cd web && python3 -m http.server 8611 &  # then open http://127.0.0.1:8611/?mock=1
+node civlings/tools/verify-web.mjs       # ALL GREEN expected
+```
+
+Next phases: iso grid + first Civling movement, then generation + the Jev
+task system.

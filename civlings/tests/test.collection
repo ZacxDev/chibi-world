@@ -1,0 +1,11 @@
+name: "test"
+scale_along_z: 0
+embedded_instances {
+  id: "test_runner"
+  data: "components {\n  id: \"script\"\n  component: \"/tests/test_main.script\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

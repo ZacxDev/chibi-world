@@ -1,0 +1,29 @@
+-- test_main: runs on bootstrap when the test collection is loaded.
+local util = require("main.math_util")
+
+local failures = 0
+
+local function check(name, cond, reason)
+    if cond then
+        print("PASS: " .. name)
+    else
+        failures = failures + 1
+        print("FAIL: " .. name .. ": " .. (reason or "assertion failed"))
+    end
+end
+
+function init(self)
+    check("add(2,3)==5", util.add(2, 3) == 5)
+    check("add(-1,1)==0", util.add(-1, 1) == 0)
+    check("mul(4,5)==20", util.mul(4, 5) == 20)
+    check("mul(0,99)==0", util.mul(0, 99) == 0)
+    check("clamp high", util.clamp(10, 0, 5) == 5)
+    check("clamp low", util.clamp(-3, 0, 5) == 0)
+    check("clamp mid", util.clamp(3, 0, 5) == 3)
+    if failures == 0 then
+        print("ALL TESTS PASSED")
+    else
+        print("TESTS FAILED: " .. failures)
+    end
+    msg.post("@system:", "exit", { code = failures })
+end

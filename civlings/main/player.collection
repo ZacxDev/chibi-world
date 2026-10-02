@@ -1,0 +1,97 @@
+name: "player"
+scale_along_z: 0
+embedded_instances {
+  id: "player"
+  children: "rig"
+  data: "components {\n  id: \"script\"\n  component: \"/main/player.script\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "rig"
+  children: "head"
+  children: "body"
+  children: "arm_l"
+  children: "arm_r"
+  children: "leg_l"
+  children: "leg_r"
+  children: "camera_go"
+  data: ""
+  position {
+    x: 0
+    y: 0.95
+    z: 0
+  }
+}
+embedded_instances {
+  id: "head"
+  data: "embedded_components {\n  id: \"head\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_skin.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"hair\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_hair.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 0.09\n    z: -0.05\n  }\n}\nembedded_components {\n  id: \"eye_l\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_eye.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: -0.14\n    y: 0.03\n    z: -0.37\n  }\n}\nembedded_components {\n  id: \"eye_r\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/sphere_eye.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0.14\n    y: 0.03\n    z: -0.37\n  }\n}\nembedded_components {\n  id: \"blush_l\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_blush.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: -0.23\n    y: -0.08\n    z: -0.38\n  }\n}\nembedded_components {\n  id: \"blush_r\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_blush.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0.23\n    y: -0.08\n    z: -0.38\n  }\n}\n"
+  position {
+    x: 0
+    y: 0.28
+    z: 0
+  }
+}
+embedded_instances {
+  id: "body"
+  data: "embedded_components {\n  id: \"shirt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_shirt.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: -0.17\n    z: 0\n  }\n}\nembedded_components {\n  id: \"pants\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_pants.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: -0.39\n    z: 0\n  }\n}\n"
+  position {
+    x: 0
+    y: -0.12
+    z: 0
+  }
+}
+embedded_instances {
+  id: "arm_l"
+  data: "embedded_components {\n  id: \"arm\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_arm.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: -0.35
+    y: 0.12
+    z: 0
+  }
+}
+embedded_instances {
+  id: "arm_r"
+  data: "embedded_components {\n  id: \"arm\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_arm.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0.35
+    y: 0.12
+    z: 0
+  }
+}
+embedded_instances {
+  id: "leg_l"
+  data: "embedded_components {\n  id: \"leg\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_leg.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: -0.13
+    y: -0.55
+    z: 0
+  }
+}
+embedded_instances {
+  id: "leg_r"
+  data: "embedded_components {\n  id: \"leg\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/box_leg.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0.13
+    y: -0.55
+    z: 0
+  }
+}
+embedded_instances {
+  id: "camera_go"
+  data: "embedded_components {\n  id: \"camera\"\n  type: \"camera\"\n  data: \"aspect_ratio: 1.7777778\\nfov: 0.96\\nnear_z: 0.1\\nfar_z: 200.0\\nauto_aspect_ratio: 1\\n\"\n}\n"
+  position {
+    x: 0
+    y: 2.4
+    z: 6
+  }
+  rotation {
+    x: -0.179
+    y: 0
+    z: 0
+    w: 0.9838
+  }
+}
