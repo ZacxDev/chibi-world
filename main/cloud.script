@@ -1,0 +1,11 @@
+function init(self)
+	local idn = tonumber(tostring(go.get_id()):match("(%d+)$") or "3") or 3
+	self.speed = 0.3 + (idn % 5) * 0.07
+end
+
+function update(self, dt)
+	local p = go.get_position()
+	p.x = p.x + self.speed * dt
+	if p.x > 22 then p.x = -22 end
+	go.set_position(p)
+end

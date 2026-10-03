@@ -1,0 +1,97 @@
+-- Civlings world spawner: the 10x10 Genesis City grid, the first Civling,
+-- and a deterministic border planting (no RNG, so screenshots are stable).
+local iso = require("main.iso")
+local gamestate = require("main.gamestate")
+
+function init(self)
+    local counts = { plaza = 0, core = 0, outer = 0, edge = 0 }
+    for r = 0, 9 do
+        for c = 0, 9 do
+            local tier = iso.tier(c, r)
+            counts[tier] = counts[tier] + 1
+            local x, z = iso.cell_to_world(c, r)
+            collectionfactory.create("tilefactories#tile_" .. tier .. "_factory",
+                vmath.vector3(x, 0, z))
+        end
+    end
+
+    -- the first Civling, on the plaza
+    local sx, sz = iso.cell_to_world(4, 4)
+    collectionfactory.create("#playerfactory",
+        vmath.vector3(sx, iso.TIER_TOP.plaza, sz))
+
+    -- border planting outside the grid
+    local trees = {
+        { -12.5, -8, "green", 1.2 }, { -13, 3, "pink", 1.0 },
+        { 12.5, -6, "green", 1.15 }, { 13, 5, "orange", 1.0 },
+        { -8, 12.5, "green", 1.1 }, { 6, 13, "pink", 1.05 },
+        { -6, -13, "orange", 1.0 }, { 9, -12.5, "green", 1.2 },
+    }
+    for _, t in ipairs(trees) do
+        collectionfactory.create("#tree_" .. t[3] .. "_factory",
+            vmath.vector3(t[1], 0, t[2]), nil, nil, t[4])
+    end
+    for _, rp in ipairs({ { -11.5, 8.5 }, { 11.8, 10.5 }, { -12.8, -2.5 } }) do
+        collectionfactory.create("#rockfactory",
+            vmath.vector3(rp[1], 0, rp[2]), nil, nil, 1.1)
+    end
+
+    for i = 1, 4 do
+        local x = -14 + (i - 1) * 8 + (i % 2) * 2
+        local y = 9 + (i * 1.7) % 3.5
+        local z = -4 - (i * 3.1) % 6
+        collectionfactory.create("#cloudfactory",
+            vmath.vector3(x, y, z), nil, nil, 1 + (i % 3) * 0.25)
+    end
+
+    self.props = {}
+    gamestate.game_url = msg.url()
+
+    print("CIVLINGS GRID READY: 100 tiles (plaza " .. counts.plaza ..
+        ", core " .. counts.core .. ", outer " .. counts.outer ..
+        ", edge " .. counts.edge .. ")")
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("gen_prop") then
+        local key = message.c .. "," .. message.r
+        if not self.props[key] then
+            local x, z = iso.cell_to_world(message.c, message.r)
+            local y = iso.TIER_TOP[iso.tier(message.c, message.r)]
+            local rot = vmath.quat_rotation_y(math.pi / 4) -- face the camera
+            local ids = collectionfactory.create(
+                "propstore#propfactory", vmath.vector3(x, y, z), rot)
+            -- collectionfactory returns ids keyed by hash() of the local path
+            self.props[key] = ids[hash("/prop")]
+        end
+        print("PROP SCAFFOLD (" .. key .. ")")
+        if gamestate.bridge_url then
+            msg.post(gamestate.bridge_url, "to_js",
+                { event = { type = "prop", phase = "scaffold", c = message.c, r = message.r } })
+        end
+    elseif message_id == hash("gen_remove") then
+        local key = message.c .. "," .. message.r
+        local url = self.props[key]
+        if url then
+            go.delete(url)
+            self.props[key] = nil
+            print("PROP REMOVED (" .. key .. ")")
+        end
+        if gamestate.bridge_url then
+            msg.post(gamestate.bridge_url, "to_js",
+                { event = { type = "prop", phase = "removed", c = message.c, r = message.r } })
+        end
+    elseif message_id == hash("gen_texture") then
+        local url = self.props[message.c .. "," .. message.r]
+        if url then
+            -- "set_texture" is a reserved engine message (has its own
+            -- schema); ours is apply_texture.
+            msg.post(url, "apply_texture",
+                { c = message.c, r = message.r, w = message.w, h = message.h })
+            if gamestate.bridge_url then
+                msg.post(gamestate.bridge_url, "to_js",
+                    { event = { type = "prop", phase = "textured", c = message.c, r = message.r } })
+            end
+        end
+    end
+end

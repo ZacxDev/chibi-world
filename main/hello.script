@@ -1,0 +1,12 @@
+function init(self)
+    print("TINY GAME RUNNING")
+    self.frames = 0
+end
+
+function update(self, dt)
+    self.frames = self.frames + 1
+    if self.frames == 30 then
+        print("TINY GAME: 30 frames done, quitting")
+        msg.post("@system:", "exit", { code = 0 })
+    end
+end

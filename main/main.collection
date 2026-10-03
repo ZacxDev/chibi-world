@@ -1,0 +1,155 @@
+name: "main"
+scale_along_z: 0
+embedded_instances {
+  id: "game"
+  data: "components {\n  id: \"script\"\n  component: \"/main/main.script\"\n}\nembedded_components {\n  id: \"playerfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/player.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"housefactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/house.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tree_green_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tree_green.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tree_pink_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tree_pink.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tree_orange_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tree_orange.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"grassfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/grass.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"flower_pink_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/flower_pink.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"flower_yellow_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/flower_yellow.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"flower_lav_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/flower_lav.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"rockfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/rock.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"cloudfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/cloud.collection\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "world"
+  data: "embedded_components {\n  id: \"ground\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/plane_ground.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "mountain1"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: -24
+    y: -1.5
+    z: -24
+  }
+}
+embedded_instances {
+  id: "mountain2"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: 10
+    y: -1.5
+    z: -28
+  }
+  scale3 {
+    x: 1.25
+    y: 1.1
+    z: 1.25
+  }
+}
+embedded_instances {
+  id: "mountain3"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: 26
+    y: -1.5
+    z: -16
+  }
+  scale3 {
+    x: 0.9
+    y: 0.9
+    z: 0.9
+  }
+}
+embedded_instances {
+  id: "mountain4"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: -28
+    y: -1.5
+    z: 4
+  }
+  scale3 {
+    x: 1.1
+    y: 1
+    z: 1.1
+  }
+}
+embedded_instances {
+  id: "mountain5"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: -14
+    y: -1.5
+    z: 26
+  }
+  scale3 {
+    x: 1
+    y: 0.95
+    z: 1
+  }
+}
+embedded_instances {
+  id: "mountain6"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: 16
+    y: -1.5
+    z: 24
+  }
+  scale3 {
+    x: 1.15
+    y: 1.05
+    z: 1.15
+  }
+}
+embedded_instances {
+  id: "mountain7"
+  data: "embedded_components {\n  id: \"mt\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n}\nembedded_components {\n  id: \"snow\"\n  type: \"model\"\n  data: \"mesh: \\\"/assets/meshes/cone_mountain_snow.gltf\\\"\\nmaterial: \\\"/assets/materials/chibi.material\\\"\\n\"\n  position {\n    x: 0\n    y: 6.4\n    z: 0\n  }\n}\n"
+  position {
+    x: -3
+    y: -1.5
+    z: -32
+  }
+  scale3 {
+    x: 0.85
+    y: 0.85
+    z: 0.85
+  }
+}
+embedded_instances {
+  id: "bridge"
+  data: "components {\n  id: \"script\"\n  component: \"/main/bridge.script\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "camera_go"
+  data: "embedded_components {\n  id: \"camera\"\n  type: \"camera\"\n  data: \"aspect_ratio: 1.7777778\\nfov: 0.96\\nnear_z: 0.1\\nfar_z: 200.0\\nauto_aspect_ratio: 1\\northographic_projection: 1\\northographic_zoom: 28.0\\northographic_mode: ORTHO_MODE_FIXED\\n\"\n}\n"
+  position {
+    x: 19.62
+    y: 19.62
+    z: 19.62
+  }
+  rotation {
+    x: -0.27984814233312133
+    y: 0.3647051996310009
+    z: 0.11591689595929515
+    w: 0.8804762392171493
+  }
+}
+embedded_instances {
+  id: "tilefactories"
+  data: "embedded_components {\n  id: \"tile_plaza_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_plaza.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_core_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_core.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_outer_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_outer.collection\\\"\\n\"\n}\nembedded_components {\n  id: \"tile_edge_factory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/tile_edge.collection\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}
+embedded_instances {
+  id: "propstore"
+  data: "embedded_components {\n  id: \"propfactory\"\n  type: \"collectionfactory\"\n  data: \"prototype: \\\"/main/prop.collection\\\"\\n\"\n}\n"
+  position {
+    x: 0
+    y: 0
+    z: 0
+  }
+}

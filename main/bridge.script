@@ -1,0 +1,82 @@
+-- Civlings Lua <-> JS bridge (HTML5 only).
+-- The game page defines window.CivlingsGame (see civlings/web/game-bridge.js):
+-- Lua polls window.CivlingsGame.drain() for JSON messages pushed by the
+-- wrapper page, and answers with window.CivlingsGame.fromLua({...}).
+-- On non-HTML5 builds `html5` is nil and this script is inert.
+
+local gamestate = require("main.gamestate")
+
+local POLL_INTERVAL = 0.2
+
+function init(self)
+    gamestate.bridge_url = msg.url()
+    self.poll_t = 0
+    self.viewer = nil
+    self.balance = nil
+    print("CIVLINGS READY")
+    if html5 then
+        html5.run("window.CivlingsGame && window.CivlingsGame.luaReady()")
+    end
+end
+
+local function handle(self, m)
+    if m.type == "ping" then
+        print("BRIDGE PING RECEIVED")
+        if html5 then
+            html5.run("window.CivlingsGame.fromLua({type:'pong'})")
+        end
+    elseif m.type == "viewer" then
+        self.viewer = m.viewer
+        print("BRIDGE VIEWER: " .. (m.viewer and m.viewer.username or "anonymous"))
+    elseif m.type == "buzz_balance" then
+        self.balance = m.balance
+        local total = (m.balance.blue or 0) + (m.balance.green or 0) + (m.balance.yellow or 0)
+        print("BRIDGE BUZZ BALANCE: " .. total)
+    elseif m.type == "announce_stats" then
+        if gamestate.civling_url then
+            msg.post(gamestate.civling_url, "announce_stats", {})
+        end
+    elseif m.type == "jev" then
+        if gamestate.civling_url then
+            msg.post(gamestate.civling_url, "jev_assign",
+                { task = m.task, c = m.c, r = m.r })
+        end
+    elseif m.type == "restore" then
+        if gamestate.civling_url then
+            msg.post(gamestate.civling_url, "restore",
+                { c = m.c, r = m.r, stamina = m.stamina })
+        end
+    elseif m.type == "gen_prop" then
+        if gamestate.game_url then
+            msg.post(gamestate.game_url, "gen_prop", { c = m.c, r = m.r })
+        end
+    elseif m.type == "gen_texture" then
+        -- data stays in JS (game-bridge.js stash); Defold messages cap ~2KB.
+        if gamestate.game_url then
+            msg.post(gamestate.game_url, "gen_texture", { c = m.c, r = m.r, w = m.w, h = m.h })
+        end
+    elseif m.type == "gen_remove" then
+        if gamestate.game_url then
+            msg.post(gamestate.game_url, "gen_remove", { c = m.c, r = m.r })
+        end
+    end
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("to_js") and html5 then
+        html5.run("window.CivlingsGame.fromLua(" .. json.encode(message.event) .. ")")
+    end
+end
+
+function update(self, dt)
+    if not html5 then return end
+    self.poll_t = self.poll_t + dt
+    if self.poll_t < POLL_INTERVAL then return end
+    self.poll_t = 0
+    local raw = html5.run("window.CivlingsGame ? window.CivlingsGame.drain() : ''")
+    if raw == nil or raw == "" then return end
+    local msgs = json.decode(raw)
+    for _, msg in ipairs(msgs) do
+        handle(self, msg)
+    end
+end

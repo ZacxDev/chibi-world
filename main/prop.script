@@ -1,0 +1,33 @@
+-- A generated decoration prop: a pale "scaffolding" slab until the real
+-- texture arrives from the wrapper, then a textured display card.
+local b64 = require("main.b64")
+
+function init(self)
+    local p = go.get_position()
+    self.tex_key = "prop_" .. math.floor(p.x + 0.5) .. "_" .. math.floor(p.z + 0.5)
+    go.set_scale(vmath.vector3(0.0001, 0.0001, 0.0001), "card")
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("apply_texture") then
+        local w, h = message.w, message.h
+        local data = message.data
+        if html5 then
+            data = html5.run("window.CivlingsGame.textureData('"
+                .. message.c .. "," .. message.r .. "')")
+        end
+        local bytes = b64.decode(data or "")
+        local buf = buffer.create(w * h, {
+            { name = hash("rgba"), type = buffer.VALUE_TYPE_UINT8, count = 4 } })
+        local stream = buffer.get_stream(buf, hash("rgba"))
+        for i = 1, #bytes do stream[i] = bytes:byte(i) end
+        local tex = resource.create_texture("/gen/" .. self.tex_key .. ".texturec", {
+            width = w, height = h,
+            type = graphics.TEXTURE_TYPE_2D, format = graphics.TEXTURE_FORMAT_RGBA,
+        }, buf)
+        go.set("card#cardm", "texture0", tex)
+        go.set_scale(vmath.vector3(1, 1, 1), "card")
+        go.set_scale(vmath.vector3(0.0001, 0.0001, 0.0001), "scaffold")
+        print("PROP TEXTURED (" .. message.c .. "," .. message.r .. ") " .. w .. "x" .. h)
+    end
+end

@@ -1,0 +1,873 @@
+[ {
+  "path" : "/<AnonymousRoot>",
+  "hexDigest" : null,
+  "children" : [ "/main/main.collectionc", "/builtins/render/default.renderc", "/input/game.input_bindingc", "/builtins/input/default.gamepadsc", "/builtins/render/default.display_profilesc", "/builtins/scripts/debugger.luac" ]
+}, {
+  "path" : "/main/main.collectionc",
+  "hexDigest" : "2c20e40763fead33acb939866a2a9f5e923d6ef7",
+  "children" : [ "/_generated_be8b3713cf3b35b7.goc", "/_generated_70d974caf92ae51b.goc", "/_generated_d40c36a86005c5de.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_747ae9e60af84148.goc", "/_generated_1ac348817aa0f120.goc", "/_generated_20290f839c154372.goc", "/_generated_7dd77c3779fc2ed1.goc" ]
+}, {
+  "path" : "/_generated_be8b3713cf3b35b7.goc",
+  "hexDigest" : "612ca2197cc24424c339427b0e2673ef4163b877",
+  "children" : [ "/main/bridge.scriptc" ]
+}, {
+  "path" : "/main/bridge.scriptc",
+  "hexDigest" : "ff172ef1596c9d3ec1b54c77b9a301eec4f02d8b",
+  "children" : [ "/main/gamestate.luac" ]
+}, {
+  "path" : "/main/gamestate.luac",
+  "hexDigest" : "9ee7afb4ccc3d35cb2ee863b497ba0839e6cd57d",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_70d974caf92ae51b.goc",
+  "hexDigest" : "26fe9bf2b7674a4643e91ec0648eedb6073c98e3",
+  "children" : [ "/_generated_f2b7dea9fa4b8ba4.camerac" ]
+}, {
+  "path" : "/_generated_f2b7dea9fa4b8ba4.camerac",
+  "hexDigest" : "e8d8a7e0177441f2faa03656b1fec830d4a384ab",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_d40c36a86005c5de.goc",
+  "hexDigest" : "d04dad250a170a624a6f5421ed78f0c82e5a0e12",
+  "children" : [ "/main/main.scriptc", "/_generated_faba0ed3523ed12f.collectionfactoryc", "/_generated_c6026fa6a5330316.collectionfactoryc", "/_generated_44c01a865b519352.collectionfactoryc", "/_generated_73b385a44e72aec0.collectionfactoryc", "/_generated_94e0cce594d91e80.collectionfactoryc", "/_generated_e4c4bbecc994c7dc.collectionfactoryc", "/_generated_19152e623672b874.collectionfactoryc", "/_generated_203a09a8e57aa65b.collectionfactoryc", "/_generated_a57ced45443b9e14.collectionfactoryc", "/_generated_4e001d281103ede0.collectionfactoryc", "/_generated_201b1bfada302028.collectionfactoryc" ]
+}, {
+  "path" : "/main/main.scriptc",
+  "hexDigest" : "d70b88b099f785d3fd945fe3712640035b3f61c1",
+  "children" : [ "/main/iso.luac", "/main/gamestate.luac" ]
+}, {
+  "path" : "/main/iso.luac",
+  "hexDigest" : "23efa07109f6b89d0bae89100ed690d429a7a1c0",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_faba0ed3523ed12f.collectionfactoryc",
+  "hexDigest" : "1b0c806c1cfe4cc6121aa6242109db9d1a7bb9b6",
+  "children" : [ "/main/player.collectionc" ]
+}, {
+  "path" : "/main/player.collectionc",
+  "hexDigest" : "eb331f9b6208392ba7d63d2be5189a77494046e3",
+  "children" : [ "/_generated_24b64befd3ad1821.goc", "/_generated_8fde9a69be088c13.goc", "/_generated_72ff26e3e88bfbfd.goc", "/_generated_89a953ad0e2038c.goc", "/_generated_3c071cdbff8aef46.goc", "/_generated_0.goc", "/_generated_49fbc61f2cf10004.goc", "/_generated_49fbc61f2cf10004.goc", "/_generated_baf6c2d11d15f4cf.goc", "/_generated_89a953ad0e2038c.goc" ]
+}, {
+  "path" : "/_generated_24b64befd3ad1821.goc",
+  "hexDigest" : "8538bf078047a0410cfff25c4185f78a4f4f29bd",
+  "children" : [ "/_generated_9af35795bc44e2b0.modelc" ]
+}, {
+  "path" : "/_generated_9af35795bc44e2b0.modelc",
+  "hexDigest" : "38673921415498929cfc4bb47adda9b564244096",
+  "children" : [ "/_generated_9af35795bc44e2b0.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9af35795bc44e2b0.rigscenec",
+  "hexDigest" : "ed0cf0782161bb6c1a9be25729c42fbceda2d471",
+  "children" : [ "/assets/meshes/box_bar_back.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_bar_back.meshsetc",
+  "hexDigest" : "c8dfde860cf69015cd912230f2bacf226ec446d7",
+  "children" : [ ]
+}, {
+  "path" : "/assets/materials/chibi.materialc",
+  "hexDigest" : "225b07e4c887e4f8172843e3989f853d3be7b25e",
+  "children" : [ "/shader_7464462476044963416.spc" ]
+}, {
+  "path" : "/shader_7464462476044963416.spc",
+  "hexDigest" : "1369ad8cf4dee27027f304f7ea5f89adf7c4d612",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_8fde9a69be088c13.goc",
+  "hexDigest" : "a4d735f7a3fe9cdee6dfbdab160bfb1cc026c3c8",
+  "children" : [ "/_generated_6826ec53b6b96f6a.modelc" ]
+}, {
+  "path" : "/_generated_6826ec53b6b96f6a.modelc",
+  "hexDigest" : "6246c8a960cf335284f3a2a1779707a03151bc20",
+  "children" : [ "/_generated_6826ec53b6b96f6a.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_6826ec53b6b96f6a.rigscenec",
+  "hexDigest" : "1402c68d3eec630c9fd76650af6376989f5eadbe",
+  "children" : [ "/assets/meshes/box_bar_fill.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_bar_fill.meshsetc",
+  "hexDigest" : "877d12c49ad571b0ed458ba22cf085947a56eb18",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_72ff26e3e88bfbfd.goc",
+  "hexDigest" : "d91704df30fcf3de913aeb8bee728228774d0027",
+  "children" : [ "/_generated_9c31402c2ad0c561.modelc", "/_generated_769c872e857bfad.modelc", "/_generated_8f18981bc285a57c.modelc", "/_generated_8f18981bc285a57c.modelc", "/_generated_407a64809d628c7f.modelc", "/_generated_407a64809d628c7f.modelc" ]
+}, {
+  "path" : "/_generated_9c31402c2ad0c561.modelc",
+  "hexDigest" : "9f1b25fa1e82950374ac3512aadc57094b46cdae",
+  "children" : [ "/_generated_9c31402c2ad0c561.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9c31402c2ad0c561.rigscenec",
+  "hexDigest" : "9c08f8bb8ea97a4de3d3e85e11dfacc1eb4c15ad",
+  "children" : [ "/assets/meshes/sphere_skin.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_skin.meshsetc",
+  "hexDigest" : "e1c4e4d0b6512e63af061b547929819946d674a2",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_769c872e857bfad.modelc",
+  "hexDigest" : "e4aa3487904597d94d07c1abea3d77608634b9ae",
+  "children" : [ "/_generated_769c872e857bfad.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_769c872e857bfad.rigscenec",
+  "hexDigest" : "3bf2df2e7f22c508b127ebc9775584ec19c32a2c",
+  "children" : [ "/assets/meshes/sphere_hair.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_hair.meshsetc",
+  "hexDigest" : "a5c0be69ac40499446b2078cc02f98521b5723cd",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_8f18981bc285a57c.modelc",
+  "hexDigest" : "9099ae5c73ef9aecf9a241a72f330a6ee73c505d",
+  "children" : [ "/_generated_8f18981bc285a57c.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_8f18981bc285a57c.rigscenec",
+  "hexDigest" : "ad18f6d8ed7130b2497303d1a2acbaaeff70bb07",
+  "children" : [ "/assets/meshes/sphere_eye.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_eye.meshsetc",
+  "hexDigest" : "ce260a4febab3be22e07a9e923c5677a9fb6dff7",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_407a64809d628c7f.modelc",
+  "hexDigest" : "098d215104615c8991acfb511ed3a46a2bda28f6",
+  "children" : [ "/_generated_407a64809d628c7f.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_407a64809d628c7f.rigscenec",
+  "hexDigest" : "c78279827763d7c8d5de9c11808e713c8626e9c6",
+  "children" : [ "/assets/meshes/box_blush.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_blush.meshsetc",
+  "hexDigest" : "3b72fc171f8dd60c10cb11a0801cd4eff4f66702",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_89a953ad0e2038c.goc",
+  "hexDigest" : "f784209724d55a67add90f3acf83f9b5dd22fbb5",
+  "children" : [ "/_generated_9e79454bbd216238.modelc" ]
+}, {
+  "path" : "/_generated_9e79454bbd216238.modelc",
+  "hexDigest" : "3a73190331954356f6c72989cb0d789152aa709b",
+  "children" : [ "/_generated_9e79454bbd216238.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9e79454bbd216238.rigscenec",
+  "hexDigest" : "b2d0e144ddb8092f2a9eda481e37dd84bc554228",
+  "children" : [ "/assets/meshes/box_leg.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_leg.meshsetc",
+  "hexDigest" : "e6b8d29734993da13383bece5dc1261e1e5c0cfd",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_3c071cdbff8aef46.goc",
+  "hexDigest" : "ca2edfabecacfc4bb21aa0337951e83004324256",
+  "children" : [ "/main/civling.scriptc" ]
+}, {
+  "path" : "/main/civling.scriptc",
+  "hexDigest" : "3a9a82f4b3d2092edf23cfbe1ce87db6576bd363",
+  "children" : [ "/main/iso.luac", "/main/jev.luac", "/main/gamestate.luac" ]
+}, {
+  "path" : "/main/jev.luac",
+  "hexDigest" : "7f7c14ecfcb160797a1c0d8b5d6ab1ad60a32f49",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_0.goc",
+  "hexDigest" : "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_49fbc61f2cf10004.goc",
+  "hexDigest" : "a2bc5dc8b4999a16ee7f13dc3608942c5e3d7bc3",
+  "children" : [ "/_generated_3d509c7fbf382965.modelc" ]
+}, {
+  "path" : "/_generated_3d509c7fbf382965.modelc",
+  "hexDigest" : "67f79d257bcdced17684647eed101d800b65c7aa",
+  "children" : [ "/_generated_3d509c7fbf382965.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_3d509c7fbf382965.rigscenec",
+  "hexDigest" : "88c3c9348844bc46877b22dfd60e9d38832e4dfc",
+  "children" : [ "/assets/meshes/box_arm.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_arm.meshsetc",
+  "hexDigest" : "0df1887f4a23ef93b7a2a5bf7f3a3e9b46d1b1a2",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_baf6c2d11d15f4cf.goc",
+  "hexDigest" : "4bebf4ecacdb2427784fdabb8dd40152c156b09f",
+  "children" : [ "/_generated_63408fca4454cb43.modelc", "/_generated_10bff23ea2d5bc21.modelc" ]
+}, {
+  "path" : "/_generated_63408fca4454cb43.modelc",
+  "hexDigest" : "a2a77b37353101ffca7f909ab3e25dcb11828c97",
+  "children" : [ "/_generated_63408fca4454cb43.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_63408fca4454cb43.rigscenec",
+  "hexDigest" : "3fe7064cdb89e446c78d91efbd9141e176484fd8",
+  "children" : [ "/assets/meshes/box_shirt.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_shirt.meshsetc",
+  "hexDigest" : "e46ff64531fb4a67c3846c5856a8570b2b109ac6",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_10bff23ea2d5bc21.modelc",
+  "hexDigest" : "f28f460d4389846d78e9284347374366a8729f22",
+  "children" : [ "/_generated_10bff23ea2d5bc21.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_10bff23ea2d5bc21.rigscenec",
+  "hexDigest" : "06de06d8c04d20f6dbd130798ba0f5954fd1e73d",
+  "children" : [ "/assets/meshes/box_pants.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_pants.meshsetc",
+  "hexDigest" : "ed7e4736c315881fb69886f463d4a754f7a6483c",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_c6026fa6a5330316.collectionfactoryc",
+  "hexDigest" : "e67f7daf93a3c342f8e4d262c65164becb678c34",
+  "children" : [ "/main/house.collectionc" ]
+}, {
+  "path" : "/main/house.collectionc",
+  "hexDigest" : "bcf323fc0ec00fb905573abcd22b3c20d26de86f",
+  "children" : [ "/_generated_f882ca3d24b83679.goc" ]
+}, {
+  "path" : "/_generated_f882ca3d24b83679.goc",
+  "hexDigest" : "e7398d2c056f4dd60c3537267c4b3df74e7012d7",
+  "children" : [ "/_generated_6fa936a2259376ea.modelc", "/_generated_6cfbef0e60d39725.modelc", "/_generated_e026b1b3a2b21db0.modelc", "/_generated_505d4a8d0c34d63e.modelc", "/_generated_9b0bc9d680e36f52.modelc", "/_generated_7ea75b1c999190b4.modelc", "/_generated_9c99294646f9e9cf.modelc", "/_generated_7ea75b1c999190b4.modelc", "/_generated_9c99294646f9e9cf.modelc", "/_generated_7ea75b1c999190b4.modelc", "/_generated_9c99294646f9e9cf.modelc" ]
+}, {
+  "path" : "/_generated_6fa936a2259376ea.modelc",
+  "hexDigest" : "30e68e21cdaec2976bf1d0c404a2304c6efce8e0",
+  "children" : [ "/_generated_6fa936a2259376ea.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_6fa936a2259376ea.rigscenec",
+  "hexDigest" : "1d3689f3d50b6739a735767e91df81dfd3753b41",
+  "children" : [ "/assets/meshes/box_wall.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_wall.meshsetc",
+  "hexDigest" : "fb386614543d5f29a18e823af8979effbad0474c",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_6cfbef0e60d39725.modelc",
+  "hexDigest" : "bd5ff3f4a9f2057ade883479fa8c1cf6abb6f381",
+  "children" : [ "/_generated_6cfbef0e60d39725.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_6cfbef0e60d39725.rigscenec",
+  "hexDigest" : "1d4dd47a110948bff59ca3a5c839828afb54ce5f",
+  "children" : [ "/assets/meshes/prism_roof.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/prism_roof.meshsetc",
+  "hexDigest" : "e7329e2c0dcfeccfea3a4543c78f012c9b19ca7a",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_e026b1b3a2b21db0.modelc",
+  "hexDigest" : "150208b55d677b23170c562a909a5d18e9811934",
+  "children" : [ "/_generated_e026b1b3a2b21db0.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_e026b1b3a2b21db0.rigscenec",
+  "hexDigest" : "a54cec2e2bd9bd6fa2fbd711e9b6addfbb3821c9",
+  "children" : [ "/assets/meshes/box_chimney.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_chimney.meshsetc",
+  "hexDigest" : "b70a11c4b62eb5c6029f655b9b6b5d6879ecf7df",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_505d4a8d0c34d63e.modelc",
+  "hexDigest" : "3747e4db89a73c25838004453039d020d1edcade",
+  "children" : [ "/_generated_505d4a8d0c34d63e.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_505d4a8d0c34d63e.rigscenec",
+  "hexDigest" : "137d2ff25d74edc3ad2dd19c3dd4490246a676e8",
+  "children" : [ "/assets/meshes/box_door.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_door.meshsetc",
+  "hexDigest" : "3dcaa5111340fd5a153a3789cc7d1e399ac9e6a2",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_9b0bc9d680e36f52.modelc",
+  "hexDigest" : "a856f2432b53a846f0edf34b4b652dfda3189b70",
+  "children" : [ "/_generated_9b0bc9d680e36f52.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9b0bc9d680e36f52.rigscenec",
+  "hexDigest" : "f45b808f6c4b2b665428061a1bec8881ab804d82",
+  "children" : [ "/assets/meshes/box_step.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_step.meshsetc",
+  "hexDigest" : "57d2c5b8c49e5dc5dd2ec2f8c816c9933c975a53",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_7ea75b1c999190b4.modelc",
+  "hexDigest" : "5ecacb01737eb6038c99a5233ed0925438985645",
+  "children" : [ "/_generated_7ea75b1c999190b4.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_7ea75b1c999190b4.rigscenec",
+  "hexDigest" : "9f59a4b30af3edd9e4e221c38614208e893bfebd",
+  "children" : [ "/assets/meshes/box_frame.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_frame.meshsetc",
+  "hexDigest" : "c93182f0bfdc09c6229d5e7ef850c4f27388b8c6",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_9c99294646f9e9cf.modelc",
+  "hexDigest" : "1526db805d2f767040d29d6a7d108f6eb53f1271",
+  "children" : [ "/_generated_9c99294646f9e9cf.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9c99294646f9e9cf.rigscenec",
+  "hexDigest" : "438b0bb8cad616fd26c1a54e94a3c6fe50867e1c",
+  "children" : [ "/assets/meshes/box_window.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_window.meshsetc",
+  "hexDigest" : "ffec4394bdf41bf1bb05e8825386be1f046e9436",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_44c01a865b519352.collectionfactoryc",
+  "hexDigest" : "4270c16707bfa458ef7141df1c3f472af67a72b2",
+  "children" : [ "/main/tree_green.collectionc" ]
+}, {
+  "path" : "/main/tree_green.collectionc",
+  "hexDigest" : "a0a3c5d2fa72bd401102f988d41bc0f161ee27f1",
+  "children" : [ "/_generated_15efb9195c39dba8.goc" ]
+}, {
+  "path" : "/_generated_15efb9195c39dba8.goc",
+  "hexDigest" : "2503a4bda0a0f1687f4530d8e18ad5ba46dad9a0",
+  "children" : [ "/_generated_8734f9d8ef071e58.modelc", "/_generated_462df89e207187d5.modelc", "/_generated_4b21c481f26e6c3b.modelc" ]
+}, {
+  "path" : "/_generated_8734f9d8ef071e58.modelc",
+  "hexDigest" : "b172b5667854980fa1afa524232ea37164d7afcf",
+  "children" : [ "/_generated_8734f9d8ef071e58.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_8734f9d8ef071e58.rigscenec",
+  "hexDigest" : "30ced015263d0387ef0f7c85f0b9af03c3f25fbe",
+  "children" : [ "/assets/meshes/cyl_trunk.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/cyl_trunk.meshsetc",
+  "hexDigest" : "930e2aeaeb5b98791763b258dc4da42d8a4d2da1",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_462df89e207187d5.modelc",
+  "hexDigest" : "8dfd47fc58c039667acb926c50adb43e339d24a7",
+  "children" : [ "/_generated_462df89e207187d5.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_462df89e207187d5.rigscenec",
+  "hexDigest" : "1d19db60eb6b7f763f84cf275744d8e3c7c38248",
+  "children" : [ "/assets/meshes/sphere_leaf.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf.meshsetc",
+  "hexDigest" : "fe93a6888186d19d62803d0692e8feab89cf8d87",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_4b21c481f26e6c3b.modelc",
+  "hexDigest" : "347f212d05b4c7e62682d82a3e2c28da973abd0e",
+  "children" : [ "/_generated_4b21c481f26e6c3b.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_4b21c481f26e6c3b.rigscenec",
+  "hexDigest" : "938c1cdaca5be965f1638fc68afeca779a95e853",
+  "children" : [ "/assets/meshes/sphere_leaf2.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf2.meshsetc",
+  "hexDigest" : "cb4528d84a3724d1c87fecde68d97dff4e854799",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_73b385a44e72aec0.collectionfactoryc",
+  "hexDigest" : "6107135e42846b5c96004f011c6abed0471ee217",
+  "children" : [ "/main/tree_pink.collectionc" ]
+}, {
+  "path" : "/main/tree_pink.collectionc",
+  "hexDigest" : "8040395e81499488bf56218709090c53c317b068",
+  "children" : [ "/_generated_8ec5756e5cf9b0b3.goc" ]
+}, {
+  "path" : "/_generated_8ec5756e5cf9b0b3.goc",
+  "hexDigest" : "0b117d361572eb2a593e89fc29440e4f3c87f147",
+  "children" : [ "/_generated_8734f9d8ef071e58.modelc", "/_generated_8cf6a604dc66cc12.modelc", "/_generated_9788b71168c4e96c.modelc" ]
+}, {
+  "path" : "/_generated_8cf6a604dc66cc12.modelc",
+  "hexDigest" : "b694810bdb974c6dbd6e4259e02c0307d4082492",
+  "children" : [ "/_generated_8cf6a604dc66cc12.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_8cf6a604dc66cc12.rigscenec",
+  "hexDigest" : "8dec7927364195a36e35cbe5ddef24ddd11bef72",
+  "children" : [ "/assets/meshes/sphere_leaf_pink.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf_pink.meshsetc",
+  "hexDigest" : "cab428477091c774c68b65b38cfa764672569345",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_9788b71168c4e96c.modelc",
+  "hexDigest" : "649ec5bcfaaab27486aebee72e39d8c3efb6b779",
+  "children" : [ "/_generated_9788b71168c4e96c.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_9788b71168c4e96c.rigscenec",
+  "hexDigest" : "0489be008a57c3be21f9ddeebc707d6747c1c174",
+  "children" : [ "/assets/meshes/sphere_leaf2_pink.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf2_pink.meshsetc",
+  "hexDigest" : "7f5705524d27766f458f1ffa3cc379a564fab603",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_94e0cce594d91e80.collectionfactoryc",
+  "hexDigest" : "a5224b09acaec080b08e031b981f1a06adb8d093",
+  "children" : [ "/main/tree_orange.collectionc" ]
+}, {
+  "path" : "/main/tree_orange.collectionc",
+  "hexDigest" : "7516a594d0ce0926469ef5c54594f9649de94272",
+  "children" : [ "/_generated_c43db77db0b47dac.goc" ]
+}, {
+  "path" : "/_generated_c43db77db0b47dac.goc",
+  "hexDigest" : "aa0921e774f8856f947692b6b4f61b33be55340c",
+  "children" : [ "/_generated_8734f9d8ef071e58.modelc", "/_generated_e1cce04f870542d0.modelc", "/_generated_4dc85f7f346d87e2.modelc" ]
+}, {
+  "path" : "/_generated_e1cce04f870542d0.modelc",
+  "hexDigest" : "b684216324cb3211b21cc4f6e6343681178f6a90",
+  "children" : [ "/_generated_e1cce04f870542d0.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_e1cce04f870542d0.rigscenec",
+  "hexDigest" : "8ce3f03c23d90f7d9245e12aa11fbdbec6ef77e0",
+  "children" : [ "/assets/meshes/sphere_leaf_orange.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf_orange.meshsetc",
+  "hexDigest" : "2a49d4f08a90c4805b0c7628019ac585ce31f51d",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_4dc85f7f346d87e2.modelc",
+  "hexDigest" : "8d4d044bfd0ba36b70be13e35372718a21ab44de",
+  "children" : [ "/_generated_4dc85f7f346d87e2.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_4dc85f7f346d87e2.rigscenec",
+  "hexDigest" : "9487478fe5eabe5cbfbbab601916fdd2cd1ce5f6",
+  "children" : [ "/assets/meshes/sphere_leaf2_orange.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_leaf2_orange.meshsetc",
+  "hexDigest" : "b808685d255a9013ce87c29696a6d4c914f386be",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_e4c4bbecc994c7dc.collectionfactoryc",
+  "hexDigest" : "6f7efffb54d5e76e1eb6c3a27692163fab037400",
+  "children" : [ "/main/grass.collectionc" ]
+}, {
+  "path" : "/main/grass.collectionc",
+  "hexDigest" : "418d4a7e97187ef13e3df49f7f8292b9a2fefa40",
+  "children" : [ "/_generated_b9be232502008e4.goc" ]
+}, {
+  "path" : "/_generated_b9be232502008e4.goc",
+  "hexDigest" : "72c3453e70a4ff269f42bf6ecaba9b09fc4d1475",
+  "children" : [ "/_generated_37ba33fbb7a62745.modelc" ]
+}, {
+  "path" : "/_generated_37ba33fbb7a62745.modelc",
+  "hexDigest" : "3a191217c78e75faca194eef018ed5c80f62e23b",
+  "children" : [ "/_generated_37ba33fbb7a62745.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_37ba33fbb7a62745.rigscenec",
+  "hexDigest" : "4bb2ac84657f1563e049e9aa810b7b226b52d0db",
+  "children" : [ "/assets/meshes/cone_grass.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/cone_grass.meshsetc",
+  "hexDigest" : "6768291d5f770bc41df70b18050d7ad1ac23a56d",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_19152e623672b874.collectionfactoryc",
+  "hexDigest" : "6f115df5b39715505e69062ff1bcbfb152a48532",
+  "children" : [ "/main/flower_pink.collectionc" ]
+}, {
+  "path" : "/main/flower_pink.collectionc",
+  "hexDigest" : "31eb5077ad0605135bccb1d4040bf4e3d59de852",
+  "children" : [ "/_generated_9175f0746b4af27f.goc" ]
+}, {
+  "path" : "/_generated_9175f0746b4af27f.goc",
+  "hexDigest" : "d31c176cf739e618b571a78b703248c7598e9608",
+  "children" : [ "/_generated_f720302959b983e0.modelc", "/_generated_75fc53e14eaa3c15.modelc" ]
+}, {
+  "path" : "/_generated_f720302959b983e0.modelc",
+  "hexDigest" : "afc1eb94a1287f2ccce19b10ea82ed0fa7f3ccef",
+  "children" : [ "/_generated_f720302959b983e0.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_f720302959b983e0.rigscenec",
+  "hexDigest" : "8e5bae9991c367f14d23e7694f9cab2d759a712d",
+  "children" : [ "/assets/meshes/cyl_stem.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/cyl_stem.meshsetc",
+  "hexDigest" : "bdcbd42a2c92667e9d61b8b8430a5e22387165d4",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_75fc53e14eaa3c15.modelc",
+  "hexDigest" : "7669d665dac2b42dd7b5c8fb80e8e8d24a64242c",
+  "children" : [ "/_generated_75fc53e14eaa3c15.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_75fc53e14eaa3c15.rigscenec",
+  "hexDigest" : "2f785632f5a25b5d615d8af1d68d4a14bf08b1be",
+  "children" : [ "/assets/meshes/sphere_flower_pink.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_flower_pink.meshsetc",
+  "hexDigest" : "cd23a9580dffe11f791f7dfe0665a39a11104e88",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_203a09a8e57aa65b.collectionfactoryc",
+  "hexDigest" : "9446f8206c523f2c2c446c0aa5311b8d90be15a5",
+  "children" : [ "/main/flower_yellow.collectionc" ]
+}, {
+  "path" : "/main/flower_yellow.collectionc",
+  "hexDigest" : "24a87c15322e4e07eb4357f588b2437f2971aec5",
+  "children" : [ "/_generated_2434e453b095ae6c.goc" ]
+}, {
+  "path" : "/_generated_2434e453b095ae6c.goc",
+  "hexDigest" : "8f96a84830a2ff4cc8c3dda8dbf6f0c7f0ff33a7",
+  "children" : [ "/_generated_f720302959b983e0.modelc", "/_generated_dd9d17dd17e37b22.modelc" ]
+}, {
+  "path" : "/_generated_dd9d17dd17e37b22.modelc",
+  "hexDigest" : "57691692cf9ddac4886ac7a3a2cb9a06c21ef38c",
+  "children" : [ "/_generated_dd9d17dd17e37b22.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_dd9d17dd17e37b22.rigscenec",
+  "hexDigest" : "0f56feda8893cd580ce08f880de5762fde7ad228",
+  "children" : [ "/assets/meshes/sphere_flower_yellow.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_flower_yellow.meshsetc",
+  "hexDigest" : "c14765fed11ffa0637d1442bce27da77b12657e5",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_a57ced45443b9e14.collectionfactoryc",
+  "hexDigest" : "9f616dcd10dc5d84aa72b4f4b3b97af85602d783",
+  "children" : [ "/main/flower_lav.collectionc" ]
+}, {
+  "path" : "/main/flower_lav.collectionc",
+  "hexDigest" : "1df615d9d826fb6a424430a9070ce0cda2458c1a",
+  "children" : [ "/_generated_d4ab59063998b9a3.goc" ]
+}, {
+  "path" : "/_generated_d4ab59063998b9a3.goc",
+  "hexDigest" : "358370e5f9781e4dd9597839a8db292f1906fee0",
+  "children" : [ "/_generated_f720302959b983e0.modelc", "/_generated_90c568b83d0a3e7b.modelc" ]
+}, {
+  "path" : "/_generated_90c568b83d0a3e7b.modelc",
+  "hexDigest" : "a340657218274de85c062e84cc44e74dce55fce1",
+  "children" : [ "/_generated_90c568b83d0a3e7b.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_90c568b83d0a3e7b.rigscenec",
+  "hexDigest" : "0eab93e51c2f9b0d5b071eed1cb4bdd49169cd07",
+  "children" : [ "/assets/meshes/sphere_flower_lav.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_flower_lav.meshsetc",
+  "hexDigest" : "6863d7627402252147b6533f2f0935ef0df45215",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_4e001d281103ede0.collectionfactoryc",
+  "hexDigest" : "545d7841330c4d1b1118440b353d2dd1f0425663",
+  "children" : [ "/main/rock.collectionc" ]
+}, {
+  "path" : "/main/rock.collectionc",
+  "hexDigest" : "3093f0134e607e400d6ce4a840ced0e58c0a8135",
+  "children" : [ "/_generated_a4bc8faac9d04200.goc" ]
+}, {
+  "path" : "/_generated_a4bc8faac9d04200.goc",
+  "hexDigest" : "81a107a75f0f1dc3a746fb1ac27a6f1bdd2269ff",
+  "children" : [ "/_generated_f11561ca38b017f0.modelc" ]
+}, {
+  "path" : "/_generated_f11561ca38b017f0.modelc",
+  "hexDigest" : "acb2736d357cd522e3fba7b0401678d4eb3c13af",
+  "children" : [ "/_generated_f11561ca38b017f0.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_f11561ca38b017f0.rigscenec",
+  "hexDigest" : "a31c321d24c3bbd948c3178a47f4a469aa452500",
+  "children" : [ "/assets/meshes/sphere_rock.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_rock.meshsetc",
+  "hexDigest" : "94cd2357c28777b34685fcebcb59b395d458c5e7",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_201b1bfada302028.collectionfactoryc",
+  "hexDigest" : "549d46217ac525f6de735decf2ca698617480958",
+  "children" : [ "/main/cloud.collectionc" ]
+}, {
+  "path" : "/main/cloud.collectionc",
+  "hexDigest" : "b342674cfa598c715f854cd42362c11c19858917",
+  "children" : [ "/_generated_5975917c0b0a7591.goc" ]
+}, {
+  "path" : "/_generated_5975917c0b0a7591.goc",
+  "hexDigest" : "9cb63c14df8527e2e6a94eff83177dada44a5efd",
+  "children" : [ "/main/cloud.scriptc", "/_generated_a7d009f0cbcd24e9.modelc", "/_generated_bca1f929f2b48040.modelc", "/_generated_bc392e2f1ae5aea6.modelc", "/_generated_2043c09cc856ed99.modelc" ]
+}, {
+  "path" : "/main/cloud.scriptc",
+  "hexDigest" : "2282de4a948331de0ff0bbe8ee2b3ec6649d6481",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_a7d009f0cbcd24e9.modelc",
+  "hexDigest" : "bb1b05bc56d05f9f3686b7a2ccafa85a2753b564",
+  "children" : [ "/_generated_a7d009f0cbcd24e9.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_a7d009f0cbcd24e9.rigscenec",
+  "hexDigest" : "32a31bc66e1fadcec29de21de9918c4baa026665",
+  "children" : [ "/assets/meshes/sphere_cloud_a.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_cloud_a.meshsetc",
+  "hexDigest" : "702c895b6eea43a454b9391b4730150e36e2690f",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_bca1f929f2b48040.modelc",
+  "hexDigest" : "0c952d7f72e738aec0e76f7a0dbf9628ee9c5fe2",
+  "children" : [ "/_generated_bca1f929f2b48040.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_bca1f929f2b48040.rigscenec",
+  "hexDigest" : "5a9c5dbf575b81a488f35d396d5935c020ad43d2",
+  "children" : [ "/assets/meshes/sphere_cloud_b.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_cloud_b.meshsetc",
+  "hexDigest" : "48d9ab595eea9bae69b11a19028f77d9407234c6",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_bc392e2f1ae5aea6.modelc",
+  "hexDigest" : "f18f86db3b87a02579f8a5cdfc7a312a3d94c347",
+  "children" : [ "/_generated_bc392e2f1ae5aea6.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_bc392e2f1ae5aea6.rigscenec",
+  "hexDigest" : "941e63b67f533fff69f178d0b8093cc19208d26b",
+  "children" : [ "/assets/meshes/sphere_cloud_c.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_cloud_c.meshsetc",
+  "hexDigest" : "7f8c5cc7f4abc433be685949f40bd22320c202a8",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_2043c09cc856ed99.modelc",
+  "hexDigest" : "932e229758f01562e1d20e15a6be81269e1f028a",
+  "children" : [ "/_generated_2043c09cc856ed99.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_2043c09cc856ed99.rigscenec",
+  "hexDigest" : "f55452c0a574dd7fd7bccf7c65ed13361fdd80af",
+  "children" : [ "/assets/meshes/sphere_cloud.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/sphere_cloud.meshsetc",
+  "hexDigest" : "076246e309cf61bf767449b9e7123d3df32277af",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_747ae9e60af84148.goc",
+  "hexDigest" : "ca6ec746f51e910e949da4050f21f6e80c9d90d4",
+  "children" : [ "/_generated_37a179eb4e4ab6a8.modelc", "/_generated_7c6af9683acc3474.modelc" ]
+}, {
+  "path" : "/_generated_37a179eb4e4ab6a8.modelc",
+  "hexDigest" : "8d88bd6130a7292b04086a7ea8aa683eb9df48af",
+  "children" : [ "/_generated_37a179eb4e4ab6a8.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_37a179eb4e4ab6a8.rigscenec",
+  "hexDigest" : "d0b1eecebe7ea3f7e8330131251dff73ee5dd507",
+  "children" : [ "/assets/meshes/cone_mountain.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/cone_mountain.meshsetc",
+  "hexDigest" : "bd2d89fdc19b94eac86173b86c03a8bd9b2b3e51",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_7c6af9683acc3474.modelc",
+  "hexDigest" : "7db3c5f3511024682ff1296d9f792669a4da87df",
+  "children" : [ "/_generated_7c6af9683acc3474.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_7c6af9683acc3474.rigscenec",
+  "hexDigest" : "9805db9b98018fd983ef556ecce0254fd9488767",
+  "children" : [ "/assets/meshes/cone_mountain_snow.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/cone_mountain_snow.meshsetc",
+  "hexDigest" : "7c27dd6c8f9802f985f54ac8aa269e713b0c2616",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_1ac348817aa0f120.goc",
+  "hexDigest" : "3b84e54a58ed791f0dd9ed65d2e4202617d0e676",
+  "children" : [ "/_generated_f4c5a9a49c0eae2a.collectionfactoryc" ]
+}, {
+  "path" : "/_generated_f4c5a9a49c0eae2a.collectionfactoryc",
+  "hexDigest" : "9b1da8ac1b3fdb104443b0a6a72c38731997c56f",
+  "children" : [ "/main/prop.collectionc" ]
+}, {
+  "path" : "/main/prop.collectionc",
+  "hexDigest" : "245d2123bc4b0dde007574b5f506215d44c1d276",
+  "children" : [ "/_generated_27359ab4bbc07aa6.goc", "/_generated_a98d279cd47f1e2e.goc", "/_generated_2c4e6f3fcab1616b.goc" ]
+}, {
+  "path" : "/_generated_27359ab4bbc07aa6.goc",
+  "hexDigest" : "2a6623ef0d9974d4f1d758c555e5cde025e1cf8a",
+  "children" : [ "/main/prop.scriptc" ]
+}, {
+  "path" : "/main/prop.scriptc",
+  "hexDigest" : "bf1222c6cd58546f86070a43122dcc150d545e7b",
+  "children" : [ "/main/b64.luac" ]
+}, {
+  "path" : "/main/b64.luac",
+  "hexDigest" : "52141e1c6ec96249ec46d2409dbc850056702c35",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_a98d279cd47f1e2e.goc",
+  "hexDigest" : "13cec20997ba8af7ba5e64e45a957518dfb35a81",
+  "children" : [ "/_generated_e31f4f59e0853b49.modelc" ]
+}, {
+  "path" : "/_generated_e31f4f59e0853b49.modelc",
+  "hexDigest" : "bf3ae13301b84741557157b3fdb06dc67442962c",
+  "children" : [ "/_generated_e31f4f59e0853b49.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_e31f4f59e0853b49.rigscenec",
+  "hexDigest" : "3b109b50aa631e60eaf58c3bfcb011fc7555221d",
+  "children" : [ "/assets/meshes/box_scaffold.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_scaffold.meshsetc",
+  "hexDigest" : "49fd4960db71b089691f808d9c6d1cdb583d386c",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_2c4e6f3fcab1616b.goc",
+  "hexDigest" : "dd7cb0dc58994ea80703a7596a037d2d5d18c4e7",
+  "children" : [ "/_generated_7d3d748c803c6adb.modelc" ]
+}, {
+  "path" : "/_generated_7d3d748c803c6adb.modelc",
+  "hexDigest" : "0e4fbc718475c306f166df01f0336648df5fc822",
+  "children" : [ "/_generated_7d3d748c803c6adb.rigscenec", "/assets/materials/prop.materialc" ]
+}, {
+  "path" : "/_generated_7d3d748c803c6adb.rigscenec",
+  "hexDigest" : "8c9b688e7f4e4957dfb778e7b33d5400b596a787",
+  "children" : [ "/assets/meshes/plane_card.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/plane_card.meshsetc",
+  "hexDigest" : "9554a4ed3d99621488b9cb118cc2d8ff416b127e",
+  "children" : [ ]
+}, {
+  "path" : "/assets/materials/prop.materialc",
+  "hexDigest" : "6fc90f0970669d7e2434e0d53fb0cd9da995b22a",
+  "children" : [ "/shader_-7658348405792604523.spc" ]
+}, {
+  "path" : "/shader_-7658348405792604523.spc",
+  "hexDigest" : "9314f7c22ef9403f7c27b37f0ee5d68ce41f7277",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_20290f839c154372.goc",
+  "hexDigest" : "ca4a95a62c909f2e536ab147893584d8a02b4d9e",
+  "children" : [ "/_generated_e8648cb9dea52e98.collectionfactoryc", "/_generated_4b77ca4005a16816.collectionfactoryc", "/_generated_ea13767423cb78e2.collectionfactoryc", "/_generated_d58e830b5357272c.collectionfactoryc" ]
+}, {
+  "path" : "/_generated_e8648cb9dea52e98.collectionfactoryc",
+  "hexDigest" : "3f61ee518499f81e287fabca2a32e8b82d357fb1",
+  "children" : [ "/main/tile_plaza.collectionc" ]
+}, {
+  "path" : "/main/tile_plaza.collectionc",
+  "hexDigest" : "014a90c3c2ad8204cf1d0aa3a1b1878df852d957",
+  "children" : [ "/_generated_ed466fd71c2e6323.goc" ]
+}, {
+  "path" : "/_generated_ed466fd71c2e6323.goc",
+  "hexDigest" : "2dd8ee2e997a4c24db2831017aa2408fca02dc5f",
+  "children" : [ "/_generated_204a49279ca2aa23.modelc" ]
+}, {
+  "path" : "/_generated_204a49279ca2aa23.modelc",
+  "hexDigest" : "01b834505cf77c232a08a590d28135c6f8a149d2",
+  "children" : [ "/_generated_204a49279ca2aa23.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_204a49279ca2aa23.rigscenec",
+  "hexDigest" : "b705c01757f5fb0cdbbf1a0d338d1e54e832c6bb",
+  "children" : [ "/assets/meshes/box_tile_plaza.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_tile_plaza.meshsetc",
+  "hexDigest" : "78f7d2251e070b9b407b71793c8c3c2d17a59d17",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_4b77ca4005a16816.collectionfactoryc",
+  "hexDigest" : "e5ee325ce2016f3cda3b15e9ad51a1e8dae5e4a9",
+  "children" : [ "/main/tile_core.collectionc" ]
+}, {
+  "path" : "/main/tile_core.collectionc",
+  "hexDigest" : "3ddccbbefdf3776d2e73a1f7fe93d92042ced5cb",
+  "children" : [ "/_generated_f15413ac7fe770cb.goc" ]
+}, {
+  "path" : "/_generated_f15413ac7fe770cb.goc",
+  "hexDigest" : "597f10fa9ec45bd510b191948d4339d41c112cd9",
+  "children" : [ "/_generated_2e17f0147ad3ad02.modelc" ]
+}, {
+  "path" : "/_generated_2e17f0147ad3ad02.modelc",
+  "hexDigest" : "fa28165d15cfad8d9926ff2a5371cc8d5d68b1d8",
+  "children" : [ "/_generated_2e17f0147ad3ad02.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_2e17f0147ad3ad02.rigscenec",
+  "hexDigest" : "d670cb2523415cc2c68dc4499ae4593740ed0ac7",
+  "children" : [ "/assets/meshes/box_tile_core.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_tile_core.meshsetc",
+  "hexDigest" : "0e01c6a6203ad1af13ef73118929e91bbb24d113",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_ea13767423cb78e2.collectionfactoryc",
+  "hexDigest" : "59add21e31e0f9f9599d90355790f8fd375f19d7",
+  "children" : [ "/main/tile_outer.collectionc" ]
+}, {
+  "path" : "/main/tile_outer.collectionc",
+  "hexDigest" : "1d9ef2a7f9f7d091da0dba7fa66cfc296d569abd",
+  "children" : [ "/_generated_e2b0d01d1b1cfb61.goc" ]
+}, {
+  "path" : "/_generated_e2b0d01d1b1cfb61.goc",
+  "hexDigest" : "db994f7927e0d16898f4da532af6b82423cff53d",
+  "children" : [ "/_generated_4b94519485be6b9b.modelc" ]
+}, {
+  "path" : "/_generated_4b94519485be6b9b.modelc",
+  "hexDigest" : "65efe2043e4150d458c1e293bc6fcdaab27e0c9f",
+  "children" : [ "/_generated_4b94519485be6b9b.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_4b94519485be6b9b.rigscenec",
+  "hexDigest" : "8697d7827feab8ae9ad0a02926956f94e0b1be05",
+  "children" : [ "/assets/meshes/box_tile_outer.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_tile_outer.meshsetc",
+  "hexDigest" : "074200c05c3b1d13423d1cc899011f73e6c72e94",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_d58e830b5357272c.collectionfactoryc",
+  "hexDigest" : "e694dde132730c65af75dfd3dd71c4e419d95389",
+  "children" : [ "/main/tile_edge.collectionc" ]
+}, {
+  "path" : "/main/tile_edge.collectionc",
+  "hexDigest" : "e5b688b5e7c0b573790f336e8a5a3461b638d966",
+  "children" : [ "/_generated_432939e8879c77eb.goc" ]
+}, {
+  "path" : "/_generated_432939e8879c77eb.goc",
+  "hexDigest" : "a4ea9a57506e4dd7e7c8e9efacf485d708abca08",
+  "children" : [ "/_generated_6058b2ecc7f6fb05.modelc" ]
+}, {
+  "path" : "/_generated_6058b2ecc7f6fb05.modelc",
+  "hexDigest" : "22cdbc8b717bf02db66d69ec42a96a6b4b13827f",
+  "children" : [ "/_generated_6058b2ecc7f6fb05.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_6058b2ecc7f6fb05.rigscenec",
+  "hexDigest" : "b3977a0370480736a40d8f07f3958c4a187b5191",
+  "children" : [ "/assets/meshes/box_tile_edge.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/box_tile_edge.meshsetc",
+  "hexDigest" : "9aa98af82b7fa7371fa0375dd4d9d55acc33eff4",
+  "children" : [ ]
+}, {
+  "path" : "/_generated_7dd77c3779fc2ed1.goc",
+  "hexDigest" : "9700f66afb6e802068506ab0505e4ac5e57808c4",
+  "children" : [ "/_generated_c91df2b8f053f18b.modelc" ]
+}, {
+  "path" : "/_generated_c91df2b8f053f18b.modelc",
+  "hexDigest" : "359c53934dc3b3a4d91430ccb4720f49710f1717",
+  "children" : [ "/_generated_c91df2b8f053f18b.rigscenec", "/assets/materials/chibi.materialc" ]
+}, {
+  "path" : "/_generated_c91df2b8f053f18b.rigscenec",
+  "hexDigest" : "ce42d0b99d5d7879e47743fddef877af4354c654",
+  "children" : [ "/assets/meshes/plane_ground.meshsetc" ]
+}, {
+  "path" : "/assets/meshes/plane_ground.meshsetc",
+  "hexDigest" : "8e77d909ab0ade72733132c31121cb1b79a7f804",
+  "children" : [ ]
+}, {
+  "path" : "/builtins/render/default.renderc",
+  "hexDigest" : "62fcf66fed9988305fe48996f4d7693b2fac6e49",
+  "children" : [ "/builtins/render/default.render_scriptc" ]
+}, {
+  "path" : "/builtins/render/default.render_scriptc",
+  "hexDigest" : "98eaec52e31a9e060b05da3918aed653864bb5d3",
+  "children" : [ ]
+}, {
+  "path" : "/input/game.input_bindingc",
+  "hexDigest" : "36825a028e57ab13615aa6ac46d54f1b3ede206e",
+  "children" : [ ]
+}, {
+  "path" : "/builtins/input/default.gamepadsc",
+  "hexDigest" : "2e53741aa7c7cd588b25b758a0461d0eb8bd0ba2",
+  "children" : [ ]
+}, {
+  "path" : "/builtins/render/default.display_profilesc",
+  "hexDigest" : "4187e11a10b0dd0d7f1b34d3ae3c0e9632dc69fd",
+  "children" : [ ]
+}, {
+  "path" : "/builtins/scripts/debugger.luac",
+  "hexDigest" : "66a26e22b8c6c2d489b67c6e1d55f1a35d16b52c",
+  "children" : [ "/builtins/scripts/edn.luac", "/builtins/scripts/mobdebug.luac" ]
+}, {
+  "path" : "/builtins/scripts/edn.luac",
+  "hexDigest" : "ab75c49c419e82044c35ee5ba4d9f358ceb81e31",
+  "children" : [ ]
+}, {
+  "path" : "/builtins/scripts/mobdebug.luac",
+  "hexDigest" : "626e852ffb27845d30d21695abd8b6d461cd5f44",
+  "children" : [ "/builtins/scripts/socket.luac", "/builtins/scripts/edn.luac" ]
+}, {
+  "path" : "/builtins/scripts/socket.luac",
+  "hexDigest" : "83c989833ef9e544ff87efe46d9edfa63f15191a",
+  "children" : [ ]
+} ]
