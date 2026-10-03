@@ -5,7 +5,7 @@ embedded_instances {
   children: "rig"
   children: "bar_back"
   children: "bar_fill"
-  data: "components {\n  id: \"script\"\n  component: \"/main/civling.script\"\n}\n"
+  data: "components {\n  id: \"script\"\n  component: \"/main/civling.script\"\n}\ncomponents {\n  id: \"gui\"\n  component: \"/main/hud.gui\"\n}\n"
   position {
     x: 0
     y: 0

@@ -41,6 +41,12 @@ local function handle(self, m)
             msg.post(gamestate.civling_url, "jev_assign",
                 { task = m.task, c = m.c, r = m.r })
         end
+    elseif m.type == "jev_pick" then
+        -- in-game HUD bar tap (game-bridge.js hit-tests in canvas
+        -- space; the civling applies its own current target tile)
+        if gamestate.civling_url then
+            msg.post(gamestate.civling_url, "jev_assign", { task = m.task })
+        end
     elseif m.type == "restore" then
         if gamestate.civling_url then
             msg.post(gamestate.civling_url, "restore",

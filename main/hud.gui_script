@@ -1,0 +1,67 @@
+-- In-game Jev button bar (bottom of the game view). Nodes are built in
+-- code so the .gui file stays trivial. The bar is contextual: visible
+-- only while the civling is IDLE, aimed at the last tapped tile.
+--
+-- This component rides on the civling's own game object: GUI scripts
+-- run in a separate Lua context (no shared module registry), so all
+-- civling<->HUD traffic is messages to "." — delivered to every
+-- component of the object. civling.script skips grid picks inside
+-- this bar's rect while IDLE (constants mirrored there).
+--
+-- Layout (display coords 960x540, y up from the bottom edge):
+--   4 buttons 200x64, gap 14 -> total 842, x0 = 59, centres 159..801
+--   bar hit rect x 47..913, y 6..96
+local BTN_W, BTN_H, GAP = 200, 64, 14
+local TASKS = {
+    { id = "harvest",    label = "Harvest",    color = vmath.vector4(0.18, 0.40, 0.20, 1) },
+    { id = "craft",      label = "Craft",      color = vmath.vector4(0.52, 0.34, 0.15, 1) },
+    { id = "service",    label = "Service",    color = vmath.vector4(0.16, 0.34, 0.56, 1) },
+    { id = "expedition", label = "Expedition", color = vmath.vector4(0.40, 0.22, 0.50, 1) },
+}
+
+local function refresh(self)
+    if not self.buttons then return end
+    -- Visual only: taps are hit-tested in game-bridge.js (canvas
+    -- coordinates are exact there; engine input transforms are not).
+    local show = self.state == "IDLE" and self.target ~= nil
+    for _, b in ipairs(self.buttons) do
+        gui.set_enabled(b.box, show)
+        gui.set_enabled(b.txt, show)
+    end
+    gui.set_enabled(self.hint, show)
+    if show then
+        gui.set_text(self.hint, ("Tile (%d,%d) - pick a job"):format(self.target.c, self.target.r))
+    end
+end
+
+function init(self)
+    self.state = "IDLE"
+    self.target = nil
+    local total = #TASKS * BTN_W + (#TASKS - 1) * GAP
+    local x0 = (960 - total) / 2
+    self.buttons = {}
+    for i, t in ipairs(TASKS) do
+        local cx = x0 + (i - 1) * (BTN_W + GAP) + BTN_W / 2
+        local box = gui.new_box_node(vmath.vector3(cx, 50, 0), vmath.vector3(BTN_W, BTN_H, 0))
+        gui.set_color(box, t.color)
+        local txt = gui.new_text_node(vmath.vector3(cx, 50, 0), t.label)
+        gui.set_font(txt, "default")
+        gui.set_scale(txt, vmath.vector3(1.5, 1.5, 1))
+        gui.set_color(txt, vmath.vector4(1, 1, 1, 1))
+        self.buttons[i] = { id = t.id, box = box, txt = txt }
+    end
+    self.hint = gui.new_text_node(vmath.vector3(480, 104, 0), "")
+    gui.set_font(self.hint, "default")
+    gui.set_scale(self.hint, vmath.vector3(1.15, 1.15, 1))
+    gui.set_color(self.hint, vmath.vector4(1, 1, 1, 0.9))
+    print("HUD READY")
+    refresh(self)
+end
+
+function on_message(self, message_id, message)
+    if message_id == hash("hud_state") then
+        self.state = message.state or "IDLE"
+        self.target = { c = message.c, r = message.r }
+        refresh(self)
+    end
+end

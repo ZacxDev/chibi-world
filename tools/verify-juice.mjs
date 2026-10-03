@@ -54,6 +54,28 @@ const clickBtn = (label) => page.evaluate((l) => {
   const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes(l));
   b?.click(); return !!b;
 }, label);
+// Jev buttons live in the game HUD now: tap the in-game bar button.
+// Coordinates come from the game canvas rect itself — the canvas
+// letterboxes inside its iframe, so iframe fractions miss.
+const canvasPoint = async (fx, fyTop) => {
+  const gf = page.frames().find((f) => f.url().includes('/game/index.html'));
+  const r = await gf.evaluate(() => {
+    const c = document.getElementById('canvas');
+    const b = c.getBoundingClientRect();
+    return { x: b.x, y: b.y, w: b.width, h: b.height };
+  });
+  const fb = await (await gf.frameElement()).boundingBox();
+  return { x: fb.x + r.x + fx * r.w, y: fb.y + r.y + fyTop * r.h };
+};
+const clickJev = async (id) => {
+  const cx = { harvest: 159, craft: 373, service: 587, expedition: 801 }[id];
+  const p = await canvasPoint(cx / 960, 1 - 50 / 540);
+  await page.mouse.move(p.x, p.y);
+  await page.mouse.down();
+  await sleep(150);
+  await page.mouse.up();
+  return true;
+};
 const clickCell = async (c, r) => {
   const el = await page.$('iframe[title="Civlings game"]');
   const box = await el.boundingBox();
@@ -103,12 +125,12 @@ await page.screenshot({ path: `${OUT}/J3-removed.png` });
 
 // 3) per-task animations + progress bar + HUD %
 await clickCell(2, 2);
-await clickBtn('Craft');
+await clickJev('craft');
 check('HUD shows WORKING · craft · %', await waitBody(/WORKING · craft · [3-9]\d%/, 'craft pct', 45000));
 await page.screenshot({ path: `${OUT}/J4-craft-progress.png` });
 check('craft completes', await waitFor(/JEV YIELD \+28 \(craft\)/, 'craft yield', 30000));
 await waitFor(/JEV STATE IDLE/, 'cooldown done', 20000);
-await clickBtn('Harvest');
+await clickJev('harvest');
 check('HUD shows WORKING · harvest · %', await waitBody(/WORKING · harvest · [4-9]\d%/, 'harvest pct', 45000));
 await page.screenshot({ path: `${OUT}/J5-harvest-progress.png` });
 check('harvest completes', await waitFor(/JEV YIELD \+17 \(harvest\)/, 'harvest yield', 30000));

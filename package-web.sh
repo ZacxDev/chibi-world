@@ -31,9 +31,16 @@ if "game-bridge.js" not in s:
     # after the opening tag would bury our tag in the script's raw text.
     j = s.index("</script>", i) + len("</script>")
     s = s[:j] + "\n\t" + tag + s[j:]
-    open(p, "w").write(s)
-    print("bridge injected into web/game/index.html")
-else:
-    print("bridge already present")
+# Strip the template chrome: the white footer bar (Fullscreen button +
+# "Made with Defold" credit) and its light page background. bob
+# regenerates this file each build, so re-apply every time.
+import re
+s2 = re.sub(r'\s*<div class="buttons-background">.*?</div>\s*</div>', '', s, flags=re.S)
+assert 'class="buttons-background"' not in s2, "chrome strip missed"
+if 'civlings-chrome' not in s2:
+    s2 = s2.replace('</head>',
+      '<style id="civlings-chrome">body,.canvas-app-container{background:#0b0c0e !important}</style>\n</head>', 1)
+open(p, "w").write(s2)
+print("bridge injected + chrome stripped: web/game/index.html" if "game-bridge.js" not in s else "chrome stripped: web/game/index.html")
 PY
 echo "packaged: web/game/"

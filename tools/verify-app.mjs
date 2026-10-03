@@ -77,11 +77,21 @@ await sleep(150); // hold so the engine samples the press (frame-paced input)
 await page.mouse.up();
 check('tile click -> GOTO (8,7)', await waitFor(/CIVLING GOTO \(8,7\)/, 'GOTO', 15000));
 
-// harvest at the selected tile
-await page.evaluate(() => {
-  const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes('Harvest'));
-  b?.click();
+// harvest at the selected tile — the Jev buttons live in the game now:
+// tap the Harvest button in the in-game HUD bar. Coordinates come from
+// the game canvas rect itself; the canvas letterboxes inside its
+// iframe, so iframe fractions miss.
+const gf = page.frames().find((f) => f.url().includes('/game/index.html'));
+const cr = await gf.evaluate(() => {
+  const c = document.getElementById('canvas');
+  const b = c.getBoundingClientRect();
+  return { x: b.x, y: b.y, w: b.width, h: b.height };
 });
+const gfb = await (await gf.frameElement()).boundingBox();
+await page.mouse.move(gfb.x + cr.x + (159 / 960) * cr.w, gfb.y + cr.y + (1 - 50 / 540) * cr.h);
+await page.mouse.down();
+await sleep(150);
+await page.mouse.up();
 check('jev yield +17 (formula)', await waitFor(/JEV YIELD \+17 \(harvest\)/, 'YIELD', 40000));
 await sleep(400);
 text = await bodyText();

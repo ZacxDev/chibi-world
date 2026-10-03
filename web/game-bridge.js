@@ -47,4 +47,45 @@
       inbox.push(m);
     }
   });
+
+  // In-game Jev button bar hit-testing. The GUI (hud.gui_script) only
+  // renders the buttons; engine input coordinates go through transforms
+  // that shift with the canvas aspect, so taps are resolved here where
+  // the canvas rect is exact. Layout mirrors hud.gui_script (display
+  // 960x540): 4 buttons 200x64, gap 14, centres x=159..801, y=50 from
+  // the bottom. The bar is up exactly while the civling is IDLE; the
+  // fromLua stream tells us the state. Lua stays authoritative: the
+  // pick carries no target — the civling applies its own.
+  var JEV_BUTTONS = ['harvest', 'craft', 'service', 'expedition'];
+  var jevState = 'IDLE';
+  var fromLuaOrig = window.CivlingsGame.fromLua;
+  window.CivlingsGame.fromLua = function (obj) {
+    if (obj && obj.type === 'jev' && obj.state) jevState = obj.state;
+    return fromLuaOrig(obj);
+  };
+  function hitButton(clientX, clientY) {
+    if (jevState !== 'IDLE') return null;
+    var canvas = document.getElementById('canvas');
+    if (!canvas) return null;
+    var rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return null;
+    var fx = (clientX - rect.left) / rect.width;
+    var fyTop = (clientY - rect.top) / rect.height;
+    var bw = 200 / 960, bh = 64 / 540, gap = 14 / 960;
+    var total = 4 * bw + 3 * gap;
+    var x0 = (1 - total) / 2;
+    var yTop = 1 - (50 + 32) / 540, yBot = 1 - (50 - 32) / 540;
+    if (fyTop < yTop || fyTop > yBot) return null;
+    for (var i = 0; i < 4; i++) {
+      var bx = x0 + i * (bw + gap);
+      if (fx >= bx && fx <= bx + bw) return JEV_BUTTONS[i];
+    }
+    return null;
+  }
+  document.addEventListener('pointerdown', function (e) {
+    var task = hitButton(e.clientX, e.clientY);
+    if (task) {
+      inbox.push({ type: 'jev_pick', task: task });
+    }
+  }, true);
 })();

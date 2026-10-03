@@ -46,10 +46,35 @@ async function launch() {
     console.log('TIMEOUT: ' + (label || re)); return false;
   };
   const bodyText = () => page.evaluate(() => document.body.innerText);
-  const clickBtn = (label) => page.evaluate((l) => {
-    const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes(l));
-    b?.click(); return !!b;
-  }, label);
+  // Jev buttons live in the game HUD now: route task labels to canvas
+  // taps on the in-game bar. Coordinates come from the game canvas
+  // rect itself — the canvas letterboxes inside its iframe, so
+  // iframe fractions miss.
+  const canvasPoint = async (fx, fyTop) => {
+    const gf = page.frames().find((f) => f.url().includes('/game/index.html'));
+    const r = await gf.evaluate(() => {
+      const c = document.getElementById('canvas');
+      const b = c.getBoundingClientRect();
+      return { x: b.x, y: b.y, w: b.width, h: b.height };
+    });
+    const fb = await (await gf.frameElement()).boundingBox();
+    return { x: fb.x + r.x + fx * r.w, y: fb.y + r.y + fyTop * r.h };
+  };
+  const clickJev = async (id) => {
+    const cx = { harvest: 159, craft: 373, service: 587, expedition: 801 }[id];
+    const p = await canvasPoint(cx / 960, 1 - 50 / 540);
+    await page.mouse.move(p.x, p.y);
+    await page.mouse.down(); await sleep(150); await page.mouse.up();
+    return true;
+  };
+  const clickBtn = (label) => {
+    const jevId = { Harvest: 'harvest', Craft: 'craft', Service: 'service', Expedition: 'expedition' }[label];
+    if (jevId) return clickJev(jevId);
+    return page.evaluate((l) => {
+      const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes(l));
+      b?.click(); return !!b;
+    }, label);
+  };
   const clickCell = async (c, r) => {
     const el = await page.$('iframe[title="Civlings game"]');
     const box = await el.boundingBox();
@@ -136,8 +161,9 @@ async function fpsMeasure(frame, seconds) {
   await sleep(20000);
   await clickBtn('Expedition');
   await sleep(1500);
-  await clickBtn('Craft');
-  rec('busy rejection while WORKING', await waitFor(/JEV REJECTED busy/, 15000));
+  // While WORKING the in-game bar is hidden; a grid tap is the busy surface.
+  await clickCell(5, 5);
+  rec('busy rejection while WORKING', await waitFor(/CIVLING BUSY \(WORKING\)/, 15000));
   // ride out the second expedition
   await waitFor(/JEV YIELD \+62 \(expedition\)/, 45000);
   await shot(page, 'P4-expedition.png');

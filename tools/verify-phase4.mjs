@@ -52,6 +52,28 @@ async function openRun(query = '') {
     const b = [...document.querySelectorAll('button')].find((x) => x.textContent.includes(l));
     b?.click(); return !!b;
   }, label);
+  // Jev buttons live in the game HUD now: tap the in-game bar button.
+  // Coordinates come from the game canvas rect itself — the canvas
+  // letterboxes inside its iframe, so iframe fractions miss.
+  const canvasPoint = async (fx, fyTop) => {
+    const gf = page.frames().find((f) => f.url().includes('/game/index.html'));
+    const r = await gf.evaluate(() => {
+      const c = document.getElementById('canvas');
+      const b = c.getBoundingClientRect();
+      return { x: b.x, y: b.y, w: b.width, h: b.height };
+    });
+    const fb = await (await gf.frameElement()).boundingBox();
+    return { x: fb.x + r.x + fx * r.w, y: fb.y + r.y + fyTop * r.h };
+  };
+  const clickJev = async (id) => {
+    const cx = { harvest: 159, craft: 373, service: 587, expedition: 801 }[id];
+    const p = await canvasPoint(cx / 960, 1 - 50 / 540);
+    await page.mouse.move(p.x, p.y);
+    await page.mouse.down();
+    await new Promise((r2) => setTimeout(r2, 150));
+    await page.mouse.up();
+    return true;
+  };
   const clickCell = async (c, r) => {
     const el = await page.$('iframe[title="Civlings game"]');
     const box = await el.boundingBox();
@@ -61,7 +83,7 @@ async function openRun(query = '') {
     await new Promise((r2) => setTimeout(r2, 150));
     await page.mouse.up();
   };
-  return { browser, page, texts, saw, waitFor, bodyText, clickBtn, clickCell };
+  return { browser, page, texts, saw, waitFor, bodyText, clickBtn, clickCell, clickJev };
 }
 
 const results = [];
@@ -70,12 +92,12 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------- A) write path -------------------------------------------------
 {
-  const { browser, page, waitFor, bodyText, clickBtn, clickCell } = await openRun('?consent=granted');
+  const { browser, page, waitFor, bodyText, clickBtn, clickCell, clickJev } = await openRun('?consent=granted');
   check('A boot', await waitFor(/CIVLINGS GRID READY/, 'A GRID', 120000));
   await sleep(1000);
   await clickCell(8, 7);
   check('A walk', await waitFor(/CIVLING GOTO \(8,7\)/, 'A GOTO', 15000));
-  await clickBtn('Harvest');
+  await clickJev('harvest');
   check('A yield +17', await waitFor(/JEV YIELD \+17 \(harvest\)/, 'A YIELD', 40000));
   await sleep(600);
   let text = await bodyText();
